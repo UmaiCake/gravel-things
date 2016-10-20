@@ -10,7 +10,7 @@ import copy
 
 DEBUG=False
 
-raidCount = 8
+raidCount = 9
 trk = [0]*raidCount
 cpyOn = [0]*raidCount
 sndOn = [0]*raidCount
@@ -22,7 +22,8 @@ names = [
     "Chevalier Omega",
     "Celeste Omega",
     "Proto Bahamut",
-    "The Grand Order"
+    "The Grand Order",
+    "Chevalier HL"
     ]
 enSearchStrings = [
     u"Lvl 50 Tiamat Omega",
@@ -32,7 +33,8 @@ enSearchStrings = [
     u"Lvl 75 Luminiera Omega",
     u"Lvl 75 Celeste Omega",
     u"Lvl 100 Proto Bahamut",
-    u"Lvl 100 The Grand Order"
+    u"Lvl 100 The Grand Order",
+    u"Lvl 100 Chevalier Omega"
     ]
 jpSearchStrings = [
     u"Lv50 ティアマト・マグナ",
@@ -42,7 +44,8 @@ jpSearchStrings = [
     u"Lv75 シュヴァリエ・マグナ",
     u"Lv75 セレスト・マグナ",
     u"Lv100 プロトバハムート",
-    u"Lv100 ジ・オーダー・グランデ"
+    u"Lv100 ジ・オーダー・グランデ",
+    u"Lv100 シュヴァリエ・マグナ"
     ]
 logtext = {}
 idregex = re.compile(u'ID(?:：|\: )([A-Z0-9]{8})')
@@ -61,11 +64,11 @@ class TwitterStreamListener(tweepy.StreamListener):
                     found = m.group(1)
                     if trk[i]:
                         log(names[i] + ": " + found)
-                    if sndOn[i]:
-                        winsound.PlaySound('sound.wav', winsound.SND_FILENAME)
                     if cpyOn[i]:
                         pyperclip.copy(found)
-       
+                    if sndOn[i]:
+                        winsound.PlaySound('sound.wav', winsound.SND_FILENAME)
+                    
         return True
 
     def on_status(self, status):
