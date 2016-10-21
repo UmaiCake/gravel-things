@@ -304,8 +304,7 @@ ImageSearchWrapper(byref searchResultX, byref searchResultY, imageFileName)
 	searchResultX := 0
 	searchResultY := 0
 	
-	imagePath = %image_path%%imageFileName%
-	ImageSearch, searchResultX, searchResultY, 0, 0, GBF_winWidth, GBF_winHeight, *20 %imagePath%
+	ImageSearch, searchResultX, searchResultY, 0, 0, GBF_winWidth, GBF_winHeight, %  image_path . imageFileName
 	
 	if ErrorLevel = 2
 	{
@@ -501,7 +500,7 @@ RandomClick(coordX, coordY, variance)
 	
 	updateLog("Random coordinate modifiers: " . randX . ", " . randY)
 	
-	MouseMove coordX + randX, coordY + randY
+	MouseMove coordX + randX + 7, coordY + randY + 20
 	Click
 }
 
