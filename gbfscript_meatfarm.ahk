@@ -52,6 +52,7 @@ If (sURL != "")
 				ClickSkill(1,2)			
 				ClickSkill(1,3)
 				ClickSkill(1,4)
+				ClickSkill(2,2)
 				ClickSkill(3,2)	
 				
 				Sleep % default_button_delay
@@ -74,9 +75,9 @@ If (sURL != "")
 				updateLog("Battle non action count exceeded, clicking Vee dialog and Next button")
 				battleNonActions := 0
 				
-				RandomClick(vee_dialog_X, vee_dialog_Y, clickVariance)
+				;RandomClick(vee_dialog_X, vee_dialog_Y, clickVariance)
 				Sleep, % default_button_delay
-				RandomClick(next_button_X, next_button_Y, clickVariance)
+				;RandomClick(next_button_X, next_button_Y, clickVariance)
 			}
 			else
 			{
@@ -124,7 +125,7 @@ If (sURL != "")
 		
 		scrollCount = 0
 		
-		selectSummonAutoSelect := [select_party_auto_select, select_party_auto_select_2, misc_icon, misc_icon_selected]
+		selectSummonAutoSelect := [select_party_auto_select, select_party_auto_select_2, wind_icon, wind_icon_selected]
 		searchResult := multiImageSearch(coordX, coordY, selectSummonAutoSelect)
 		
 		if InStr(searchResult, select_party_auto_select)
@@ -134,12 +135,12 @@ If (sURL != "")
 			RandomClick(coordX + 197, coordY + 201, clickVariance) 
 			continue
 		}
-		else if InStr(searchResult, misc_icon)
+		else if InStr(searchResult, wind_icon)
 		{
 			updateLog("Clicking on summon icon")
-			RandomClick(misc_summon_X, misc_summon_Y, clickVariance)
+			RandomClick(wind_summon_X, wind_summon_Y, clickVariance)
 		}
-		else if InStr(searchResult, misc_icon_selected)
+		else if InStr(searchResult, wind_icon_selected)
 		{
 			updateLog("Clicking on first summon")
 			RandomClick(first_summon_X, first_summon_Y, clickVariance) 
@@ -155,7 +156,7 @@ If (sURL != "")
 		updateLog("-----In Guild Wars Screen-----")
 		Sleep, % default_interval
 		
-		GWActions := [battle_bosses, VH_Eye, use_item, not_enough_ap]
+		GWActions := [battle_bosses, VH_Eye, use_item_gw, not_enough_ap_gw]
 		searchResult := multiImageSearch(coordX, coordY, GWActions)
 		if InStr(searchResult, battle_bosses)
 		{
@@ -167,12 +168,12 @@ If (sURL != "")
 			updateLog("Clicking VH Eye")
 			RandomClick(coordX, coordY, clickVariance)		
 		}
-		else if InStr(searchResult, not_enough_ap)
+		else if InStr(searchResult, not_enough_ap_gw)
 		{
 			updateLog("Not Enough AP dialog found, clicking Use button")
 			RandomClick(coordX + 206, coordY + 490, clickVariance)
 		}
-		else if InStr(searchResult, use_item)
+		else if InStr(searchResult, use_item_gw)
 		{
 			updateLog("Use Item dialog found, clicking OK button")
 			RandomClick(use_item_ok_X, use_item_ok_Y, clickVariance)

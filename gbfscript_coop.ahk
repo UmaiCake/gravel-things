@@ -46,27 +46,30 @@ If (sURL != "")
 		{
 				updateLog("Start Battle Sequence")
 				
-				ClickSkill(4, 2)
-				ClickSkill(1, 4)
+				;ClickSkill(4, 2)
+				;ClickSkill(1, 4)
+				;ClickSkill(3, 2)
+				;ClickSkill(3, 1)
 				ClickSkill(3, 2)
-				ClickSkill(3, 1)
 				ClickSkill(2, 2)
 				
 				
+				
+				
 				Sleep, % default_button_delay
-				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)
+				;RandomClickWide(attack_button_X, attack_button_Y, clickVariance)
 		}
 		else
 		{
 			updateLog("Battle action not taken, battle non action count = " . battleNonActions)
 			if (battleNonActions >= maxBattleNonActions)
 			{
-				updateLog("Battle non action count exceeded, clicking Battle End and Next button")
+				updateLog("Battle non action count exceeded, clicking Vee dialog and Next button")
 				battleNonActions := 0
 				
-				RandomClick(battle_end_X, battle_end_Y, clickVariance)
-				Sleep, % default_button_delay
-				RandomClick(next_button_X, next_button_Y, clickVariance)
+				;RandomClick(vee_dialog_X, vee_dialog_Y, clickVariance)
+				;Sleep, % default_button_delay
+				;RandomClick(next_button_X, next_button_Y, clickVariance)
 			}
 			else
 			{

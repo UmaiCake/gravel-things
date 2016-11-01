@@ -53,8 +53,8 @@ If (sURL != "")
 		{
 				updateLog("Start Battle Sequence")
 				
-				ClickSkill(1, 2)
-				ClickSkill(1, 3)
+				;ClickSkill(1, 2)
+				;ClickSkill(1, 3)
 				ClickSkill(1, 4)
 				
 				Sleep, % default_button_delay
@@ -116,7 +116,7 @@ If (sURL != "")
 	{
 		updateLog("-----In Select Summon-----")
 		
-		selectSummonAutoSelect := [select_party_auto_select, select_party_auto_select_2, wind_icon, wind_icon_selected]
+		selectSummonAutoSelect := [select_party_auto_select, select_party_auto_select_2, misc_icon, misc_icon_selected]
 		searchResult := multiImageSearch(coordX, coordY, selectSummonAutoSelect)
 		
 		if InStr(searchResult, select_party_auto_select)
@@ -126,12 +126,12 @@ If (sURL != "")
 			RandomClick(coordX + 197, coordY + 201, clickVariance) 
 			continue
 		}
-		else if InStr(searchResult, wind_icon)
+		else if InStr(searchResult, misc_icon)
 		{
 			updateLog("Clicking on summon icon")
-			RandomClick(wind_summon_X, wind_summon_Y, clickVariance)
+			RandomClick(misc_summon_X, misc_summon_Y, clickVariance)
 		}
-		else if InStr(searchResult, wind_icon_selected)
+		else if InStr(searchResult, misc_icon_selected)
 		{
 			updateLog("Clicking on first summon")
 			RandomClick(first_summon_X, first_summon_Y, clickVariance) 

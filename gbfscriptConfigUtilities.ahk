@@ -57,7 +57,7 @@ global story_3_Y := 674
 global story_4_Y := 750
 
 global story_ok_X := 500
-global story_ok_Y := 780
+global story_ok_Y := 760
 
 global story_skip_X := 200
 global story_skip_Y := 920
@@ -99,12 +99,12 @@ global searchStage := "stage"
 global searchSelectSummon := "supporter"
 global searchResults := "result"
 global searchScene := "scene"
-global searchGuildWars := "teamraid024"
+global searchGuildWars := "teamraid"
 
 global coopHomeURL := "http://game.granbluefantasy.jp/#coopraid"
 global coopJoinURL := "http://game.granbluefantasy.jp/#coopraid/offer"
 global questURL := "http://game.granbluefantasy.jp/#quest"
-global guildWarsURL := "http://game.granbluefantasy.jp/#event/teamraid024"
+global guildWarsURL := "http://game.granbluefantasy.jp/#event/teamraid025"
 global rabbitURL:= "http://game.granbluefantasy.jp/#quest/supporter/713431/0"
 
 
@@ -155,7 +155,11 @@ global featured_button := "featured_button.png"
 
 global not_enough_ap := "not_enough_ap.png"
 
+global not_enough_ap_gw := "not_enough_ap_gw.png"
+
 global use_item := "use_item.png"
+
+global use_item_gw := "use_item_gw.png"
 
 global view_story := "view_story.png"
 

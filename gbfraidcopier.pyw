@@ -7,8 +7,13 @@ import threading
 import Tkinter
 import winsound
 import copy
+import ConfigParser
 
 DEBUG=False
+
+config = ConfigParser.ConfigParser()
+config.read('gbfraidcopier.cfg')
+
 
 raidCount = 9
 trk = [0]*raidCount
@@ -174,10 +179,10 @@ def log(text):
 
 def init_stream():
 
-    consumer_key = 'WLBbseWknPnmyNWVT7SzRgoW0'
-    consumer_secret = '2Ec0ScZqLRVgQ1ShsY4ZF5cO8mFeJcDwRMYdEoKHWYCZClBeih'
-    access_token = '2489247666-bISLnlvwoNFw4LKMg1o6n4RXZBa7ZkAFf3RtAHO'
-    access_token_secret = 'JqEV2JSU6pFFMMDWEhguLDDKyNAt3HF1g77GsKV2RzNOY'
+    consumer_key = config.get('Keys', 'consumer_key')
+    consumer_secret = config.get('Keys', 'consumer_secret')
+    access_token = config.get('Keys', 'access_token')
+    access_token_secret = config.get('Keys', 'access_token_secret')
  
     auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
     auth.secure = True
