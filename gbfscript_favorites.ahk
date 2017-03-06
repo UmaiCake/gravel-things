@@ -170,7 +170,7 @@ If (sURL != "")
 		else if InStr(searchResult, view_story)
 		{
 			updateLog("Story dialog found, clicking episode")
-			RandomClick(story_X, story_2_Y, clickVariance)	
+			RandomClick(story_X, story_3_Y, clickVariance)	
 			Sleep, % default_interval * 3  	
 			RandomClick(story_ok_X, story_ok_Y, clickVariance)			
 		}

@@ -57,7 +57,7 @@ If (sURL != "")
 				
 				
 				Sleep, % default_button_delay
-				;RandomClickWide(attack_button_X, attack_button_Y, clickVariance)
+				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)
 		}
 		else
 		{
