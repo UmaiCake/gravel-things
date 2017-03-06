@@ -3,6 +3,7 @@
 ;----------------------------------------------
 
 ;Coordinates
+global test
 global attack_button_X := 525
 global attack_button_Y := 575
 
