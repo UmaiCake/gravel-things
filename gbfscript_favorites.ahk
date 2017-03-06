@@ -38,7 +38,9 @@ If (sURL != "")
 	if InStr(sURL, searchStage)
 	{
 		updateLog("-----In Stage-----")
-		RandomClick(go_button_X, go_button_Y, clickVariance)
+		RandomClick(stage_ok_X, stage_ok_Y1, clickVariance)
+		Sleep, % default_interval 
+		RandomClick(stage_ok_X, stage_ok_Y2, clickVariance)
 		Sleep, % default_interval 
 		continue
 	}
@@ -172,7 +174,8 @@ If (sURL != "")
 			updateLog("Story dialog found, clicking episode")
 			RandomClick(story_X, story_3_Y, clickVariance)	
 			Sleep, % default_interval * 3  	
-			RandomClick(story_ok_X, story_ok_Y, clickVariance)			
+			RandomClick(story_ok_X, story_ok_Y, clickVariance)	
+			Sleep, % default_interval * 3  				
 		}
 
 		continue

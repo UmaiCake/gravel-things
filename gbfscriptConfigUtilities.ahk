@@ -3,7 +3,9 @@
 ;----------------------------------------------
 
 ;Coordinates
-global test
+global last_hosted_X := 580
+global last_hosted_Y := 745
+
 global attack_button_X := 525
 global attack_button_Y := 575
 
@@ -51,6 +53,10 @@ global go_button_Y := 592
 
 global favorites_button_X := 130
 global favorites_button_Y := 520
+
+global stage_ok_X := 350
+global stage_ok_Y1 := 680
+global stage_ok_Y2 := 630
 
 global story_X := 341
 global story_2_Y := 600
@@ -150,15 +156,22 @@ global coopjoin_room_2 := "2_coopjoin_room.png"
 global coopjoin_join_header := "coopjoin_join.png"
 global coopjoin_join_header_2 := "2_coopjoin_join.png"
 
+global last_hosted := "last_hosted.png"
+
+global tap_start := "tap_start.png"
+
+
 global favorites_button := "favorites_button.png"
 
 global featured_button := "featured_button.png"
 
 global not_enough_ap := "not_enough_ap.png"
+global not_enough_ap_2 := "not_enough_ap_2.png"
 
 global not_enough_ap_gw := "not_enough_ap_gw.png"
 
 global use_item := "use_item.png"
+global use_item_2 := "use_item_2.png"
 
 global use_item_gw := "use_item_gw.png"
 
@@ -167,115 +180,6 @@ global view_story := "view_story.png"
 global story_summary := "story_summary.png"
 
 global mole_icon := "mole.png"
-
-global battle_bosses := "battle_bosses.png"
-
-global VH_Eye := "VH_Eye.png"
-
-;----------Poker Images------------;
-global poker_image_path := "poker_image/"
-global deal_button := "deal_button.png"
-global ok_button := "ok_button.png"
-global start_button := "start_button.png"
-global high_button := "high_button.png"
-global low_button := "low_button.png"
-global no_button := "no_button.png"
-global yes_button := "yes_button.png"
-
-global 02c := "02c.png"
-global 02d := "02d.png"
-global 02h := "02h.png"
-global 02s := "02s.png"
-
-global 03c := "03c.png"
-global 03d := "03d.png"
-global 03h := "03h.png"
-global 03s := "03s.png"
-
-global 04c := "04c.png"
-global 04d := "04d.png"
-global 04h := "04h.png"
-global 04s := "04s.png"
-
-global 05c := "05c.png"
-global 05d := "05d.png"
-global 05h := "05h.png"
-global 05s := "05s.png"
-
-global 06c := "06c.png"
-global 06d := "06d.png"
-global 06h := "06h.png"
-global 06s := "06s.png"
-
-global 07c := "07c.png"
-global 07d := "07d.png"
-global 07h := "07h.png"
-global 07s := "07s.png"
-
-global 08c := "08c.png"
-global 08d := "08d.png"
-global 08h := "08h.png"
-global 08s := "08s.png"
-
-global 09c := "09c.png"
-global 09d := "09d.png"
-global 09h := "09h.png"
-global 09s := "09s.png"
-
-global 10c := "10c.png"
-global 10d := "10d.png"
-global 10h := "10h.png"
-global 10s := "10s.png"
-
-global 11c := "11c.png"
-global 11d := "11d.png"
-global 11h := "11h.png"
-global 11s := "11s.png"
-
-global 12c := "12c.png"
-global 12d := "12d.png"
-global 12h := "12h.png"
-global 12s := "12s.png"
-
-global 13c := "13c.png"
-global 13d := "13d.png"
-global 13h := "13h.png"
-global 13s := "13s.png"
-
-global 14c := "14c.png"
-global 14d := "14d.png"
-global 14h := "14h.png"
-global 14s := "14s.png"
-
-global 00x := "00x.png"
-
-global keepCard_Y1 := 375
-global keepCard_Y2 := 485
-
-global keepCard1_X1 := 100
-global keepCard1_X2 := 180
-
-global keepCard2_X1 := 185
-global keepCard2_X2 := 260
-
-global keepCard3_X1 := 265
-global keepCard3_X2 := 345
-
-global keepCard4_X1 := 350
-global keepCard4_X2 := 430
-
-global keepCard5_X1 := 435
-global keepCard5_X2 := 515
-
-global card_Y := 430
-global card1_X := 130
-global card2_X := 225
-global card3_X := 310
-global card4_X := 390
-global card5_X := 475
-
-
-
 
 ;Time intervals
 global default_button_delay := 500
@@ -295,7 +199,7 @@ global clickVariance := 20
 global clickVarianceSmall := 6
 global waitImageTimeoutMax := 10
 global waitCoopHomeMax := 7
-global waitResultMax := 5
+global waitResultMax := 3
 global cardSearchLoops := 10
 
 
