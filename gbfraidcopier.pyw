@@ -4,50 +4,44 @@ import json
 import re
 import pyperclip
 import threading
-import Tkinter
+import tkinter
 import winsound
 import copy
-import ConfigParser
+import configparser
 
 DEBUG=False
 
-config = ConfigParser.ConfigParser()
+config = configparser.ConfigParser()
 config.read('gbfraidcopier.cfg')
 
 
-raidCount = 9
+raidCount = 7
 trk = [0]*raidCount
 cpyOn = [0]*raidCount
 sndOn = [0]*raidCount
 names = [
-    "Tiamat Omega",
-    "Colossus Omega",
-    "Leviathan Omega",
-    "Yggdrasil Omega",
-    "Chevalier Omega",
-    "Celeste Omega",
+    "Huanglong",
+    "Qilin",
+    "Michael",
+    "Rapahel",    
     "Proto Bahamut",
     "The Grand Order",
     "Chevalier HL"
     ]
 enSearchStrings = [
-    u"Lvl 50 Tiamat Omega",
-    u"Lvl 70 Colossus Omega",
-    u"Lvl 60 Leviathan Omega",
-    u"Lvl 60 Yggdrasil Omega",
-    u"Lvl 75 Luminiera Omega",
-    u"Lvl 75 Celeste Omega",
+    u"Lvl 100 Huanglong",
+    u"Lvl 100 Qilin",
+    u"Lvl 100 Michael",
+    u"Lvl 100 Raphael",
     u"Lvl 100 Proto Bahamut",
     u"Lvl 100 The Grand Order",
     u"Lvl 100 Chevalier Omega"
     ]
 jpSearchStrings = [
-    u"Lv50 ティアマト・マグナ",
-    u"Lv70 コロッサス・マグナ",
-    u"Lv60 リヴァイアサン・マグナ",
-    u"Lv60 ユグドラシル・マグナ",
-    u"Lv75 シュヴァリエ・マグナ",
-    u"Lv75 セレスト・マグナ",
+    u"Lv100 黄龍",
+    u"Lv100 黒麒麟",
+    u"Lv100 ミカエル",
+    u"Lv100 ラファエル",
     u"Lv100 プロトバハムート",
     u"Lv100 ジ・オーダー・グランデ",
     u"Lv100 シュヴァリエ・マグナ"
@@ -77,7 +71,7 @@ class TwitterStreamListener(tweepy.StreamListener):
         return True
 
     def on_status(self, status):
-        print "Twitter status: " + str(status)
+        log("Twitter status: " + str(status))
  
     def on_error(self, status):
         if status == 420:
@@ -88,55 +82,55 @@ class TwitterStreamListener(tweepy.StreamListener):
         
         return False
 
-class simpleui(Tkinter.Tk):
+class simpleui(tkinter.Tk):
     def __init__(self, parent):
         global logtext
-        Tkinter.Tk.__init__(self,parent)
+        tkinter.Tk.__init__(self,parent)
         self.parent = parent
         self.copying = []
         self.sounds = []
         self.tracking = []
         self.all = []
 
-        Tkinter.Label(self, text='Raid').grid(row=0, column=0)
+        tkinter.Label(self, text='Raid').grid(row=0, column=0)
         for i in range(0, raidCount):
-            Tkinter.Label(self, text=names[i]).grid(row=i+1, column=0, stick=Tkinter.W)
+            tkinter.Label(self, text=names[i]).grid(row=i+1, column=0, stick=tkinter.W)
 
-        trklabel = Tkinter.Label(self, text='Show')
+        trklabel = tkinter.Label(self, text='Show')
         trklabel.grid(row=0, column=1)
         for i in range(0, raidCount):
-            var = Tkinter.IntVar()
+            var = tkinter.IntVar()
             self.tracking.append(var)
-            Tkinter.Checkbutton(self, variable=var, command=lambda i=i: self.changeTrk(i)).grid(row=i+1, column=1)
+            tkinter.Checkbutton(self, variable=var, command=lambda i=i: self.changeTrk(i)).grid(row=i+1, column=1)
 
-        cpylabel = Tkinter.Label(self, text='Auto copy')
+        cpylabel = tkinter.Label(self, text='Auto copy')
         cpylabel.grid(row=0, column=2)
         cpybtns = [{}] * raidCount
         for i in range(0, raidCount):
-            var = Tkinter.IntVar()
+            var = tkinter.IntVar()
             self.copying.append(var)
-            Tkinter.Checkbutton(self, variable=var, command=lambda i=i: self.changeCpy(i)).grid(row=i+1, column=2)
+            tkinter.Checkbutton(self, variable=var, command=lambda i=i: self.changeCpy(i)).grid(row=i+1, column=2)
 
-        sndlabel = Tkinter.Label(self, text='Alert')
+        sndlabel = tkinter.Label(self, text='Alert')
         sndlabel.grid(row=0, column=3)
         for i in range(0, raidCount):
-            var = Tkinter.IntVar()
+            var = tkinter.IntVar()
             self.sounds.append(var)
-            Tkinter.Checkbutton(self, variable=self.sounds[i], command=lambda i=i: self.changeSnd(i)).grid(row=i+1, column=3)
+            tkinter.Checkbutton(self, variable=self.sounds[i], command=lambda i=i: self.changeSnd(i)).grid(row=i+1, column=3)
 
-        Tkinter.Label(self, text='All').grid(row=0, column=4)
+        tkinter.Label(self, text='All').grid(row=0, column=4)
         for i in range(0, raidCount):
-            var = Tkinter.IntVar()
+            var = tkinter.IntVar()
             self.all.append(var)
-            Tkinter.Checkbutton(self, variable=var, command=lambda i=i: self.changeAll(i)).grid(row=i+1, column=4)
+            tkinter.Checkbutton(self, variable=var, command=lambda i=i: self.changeAll(i)).grid(row=i+1, column=4)
 
-        logframe = Tkinter.Frame(self)
+        logframe = tkinter.Frame(self)
         logframe.grid(row=0, column=5, rowspan=raidCount+1)
-        scrollbar = Tkinter.Scrollbar(logframe)
-        scrollbar.pack(side=Tkinter.RIGHT, fill=Tkinter.Y)
-        logtext = Tkinter.Text(logframe, state=Tkinter.DISABLED, yscrollcommand=scrollbar.set)
+        scrollbar = tkinter.Scrollbar(logframe)
+        scrollbar.pack(side=tkinter.RIGHT, fill=tkinter.Y)
+        logtext = tkinter.Text(logframe, state=tkinter.DISABLED, yscrollcommand=scrollbar.set)
         logtext.pack()
-        logtext.insert(Tkinter.END, "what")
+        logtext.insert(tkinter.END, "what")
 
     def changeAll(self, i):
         state = self.all[i].get()
@@ -172,9 +166,9 @@ class simpleui(Tkinter.Tk):
 def log(text):
     def append():
         logtext.configure(state="normal")
-        logtext.insert(Tkinter.END, text+"\n")
+        logtext.insert(tkinter.END, text+"\n")
         logtext.configure(state="disabled")
-        logtext.yview(Tkinter.END)
+        logtext.yview(tkinter.END)
     logtext.after(0, append);
 
 def init_stream():
