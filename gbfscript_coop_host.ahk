@@ -20,7 +20,7 @@ global coopHomeCycles := 0
 global resultScreenCycles := 0
 global battleNonActions := 0
 
-global waitResultMax := 1
+global waitResultMax := 2
 
 CoordMode Pixel, Relative
 CoordMode Mouse, Relative
@@ -49,7 +49,7 @@ If (sURL != "")
 				updateLog("Start Battle Sequence")
 
 				Sleep, % default_button_delay
-				;RandomClickWide(attack_button_X, attack_button_Y, clickVariance)
+				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)
 		}
 		else
 		{
@@ -117,7 +117,7 @@ If (sURL != "")
 		{
 			updateLog("Clicking Last Hosted button")
 			RandomClick(last_hosted_X, last_hosted_Y, clickVariance)
-			Sleep, % default_interval
+			Sleep, % post_attack_button_delay
 		}
 		else if InStr(searchResult, tap_start)
 		{
@@ -204,7 +204,6 @@ Return
 
 
 
-
 ;----------------------------------------------
 ;Keybinds
 ;----------------------------------------------
@@ -225,4 +224,7 @@ ExitApp
 ForceExitApp:
 SetTimer,  ForceExitApp, Off
 ExitApp
+
+
+
 

@@ -15,7 +15,7 @@ Gui, Add, ListView, x6 y6 w400 h500 vLogbox LVS_REPORT, %A_Now%|Activity
 ;----------------------------------------------
 
 global globalTimeout := 0
-global maxGlobalTimeout := 7
+global maxGlobalTimeout := 8
 global attackTurns := 0
 global coopHomeCycles := 0
 global resultScreenCycles := 0
@@ -62,7 +62,11 @@ If (sURL != "")
 				;ClickSkill(2, 2)
 				
 				ClickSkill(2, 2)
-				ClickSkill(3, 2)
+				;ClickSkill(2, 2)
+				;ClickSkill(2, 2)
+
+				Send, {F5}
+				;ClickSkill(3, 2)
 				
 				;ClickSkill(1, 1)
 				

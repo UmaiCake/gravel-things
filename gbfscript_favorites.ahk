@@ -1,9 +1,10 @@
 #Include gbfscriptConfigUtilities.ahk
 
-SetTimer, ForceExitApp, 5000000 ; 1h20 minutes
+SetTimer, ForceExitApp, 3600000 ; 1h20 minutes
 
 global maxAttackTurns := 999
 global maxBattleNonActions := 2
+global maxBattles := 10
 
 Gui, Add, ListView, x6 y6 w400 h500 vLogbox LVS_REPORT, %A_Now%|Activity
  LV_ModifyCol(1, 60)
@@ -19,6 +20,8 @@ global attackTurns := 0
 global coopHomeCycles := 0
 global resultScreenCycles := 0
 global battleNonActions := 0
+global battleCount := 0
+global maxBattles := maxBattles * waitResultMax
 
 CoordMode Pixel, Relative
 CoordMode Mouse, Relative
@@ -67,11 +70,9 @@ If (sURL != "")
 			updateLog("Battle action not taken, battle non action count = " . battleNonActions)
 			if (battleNonActions >= maxBattleNonActions)
 			{
-				updateLog("Battle non action count exceeded, clicking Vee dialog and Next button")
+				updateLog("Battle non action count exceeded, clicking Next button")
 				battleNonActions := 0
-				
-				RandomClick(vee_dialog_X, vee_dialog_Y, clickVariance)
-				Sleep, % default_button_delay
+
 				RandomClick(next_button_X, next_button_Y, clickVariance)
 			}
 			else
@@ -87,6 +88,17 @@ If (sURL != "")
 		attackTurns := 0
 		globalTimeout := 0
 		battleNonActions := 0
+		
+		battleCount := battleCount + 1
+		updateLog("Battle count: " . battleCount)
+		if(battleCount >= maxBattles)
+		{
+			MsgBox, 4,, Max battles reached - continue?
+			IfMsgBox Yes
+				battleCount := 0
+			else
+				ExitApp
+		}
 		
 		resultScreenCycles := resultScreenCycles + 1
 		
@@ -118,7 +130,7 @@ If (sURL != "")
 	{
 		updateLog("-----In Select Summon-----")
 		
-		selectSummonAutoSelect := [select_party_auto_select, select_party_auto_select_2, misc_icon, misc_icon_selected]
+		selectSummonAutoSelect := [select_party_auto_select, select_party_auto_select_2, special_members, misc_icon, misc_icon_selected]
 		searchResult := multiImageSearch(coordX, coordY, selectSummonAutoSelect)
 		
 		if InStr(searchResult, select_party_auto_select)
@@ -127,6 +139,11 @@ If (sURL != "")
 			
 			RandomClick(coordX + 197, coordY + 201, clickVariance) 
 			continue
+		}
+		else if InStr(searchResult, special_members)
+		{
+			updateLog("Special Member dialog found, clicking OK button")
+			RandomClick(select_summon_ok_X, select_summon_ok_Y, clickVariance)
 		}
 		else if InStr(searchResult, misc_icon)
 		{
@@ -172,10 +189,16 @@ If (sURL != "")
 		else if InStr(searchResult, view_story)
 		{
 			updateLog("Story dialog found, clicking episode")
-			RandomClick(story_X, story_3_Y, clickVariance)	
-			Sleep, % default_interval * 3  	
+			RandomClick(story_X, story_4_Y, clickVariance)	
+			Sleep, % default_interval * 2
+			RandomClick(story_ok_X, story_ok_Y-75, clickVariance)	
+			Sleep, % default_interval 	
+			RandomClick(story_ok_X, story_ok_Y-50, clickVariance)	
+			Sleep, % default_interval 	
+			RandomClick(story_ok_X, story_ok_Y-25, clickVariance)	
+			Sleep, % default_interval 	
 			RandomClick(story_ok_X, story_ok_Y, clickVariance)	
-			Sleep, % default_interval * 3  				
+			Sleep, % default_interval 			
 		}
 
 		continue

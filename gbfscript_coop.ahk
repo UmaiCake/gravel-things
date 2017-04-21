@@ -4,6 +4,7 @@ SetTimer, ForceExitApp, 3600000 ; 1h20 minutes
 
 global maxAttackTurns := 999
 global maxBattleNonActions := 3
+global maxGlobalTimeout := 10
 
 Gui, Add, ListView, x6 y6 w400 h500 vLogbox LVS_REPORT, %A_Now%|Activity
  LV_ModifyCol(1, 60)
@@ -34,7 +35,11 @@ WinGetClass, sClass, A
 If (sURL != "")
 {
 	;updateLog("The URL is : " . sURL)
-
+	if(globalTimeout > maxGlobalTimeout)
+	{
+		Send, {f5}
+		globalTimeout := 0
+	}
 	if InStr(sURL, searchBattle)
 	{
 		updateLog("-----In Battle-----")
@@ -46,30 +51,28 @@ If (sURL != "")
 		{
 				updateLog("Start Battle Sequence")
 				
-				;ClickSkill(4, 2)
-				;ClickSkill(1, 4)
-				;ClickSkill(3, 2)
-				;ClickSkill(3, 1)
+				ClickSkill(4, 2)
+				ClickSkill(1, 4)
 				ClickSkill(3, 2)
+				ClickSkill(3, 1)
 				ClickSkill(2, 2)
 				
-				
-				
+				;ClickSkill(2, 2)
+				;ClickSkill(2, 3)
+				;ClickSkill(3, 2)
 				
 				Sleep, % default_button_delay
 				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)
+				globalTimeout := 0
 		}
 		else
 		{
 			updateLog("Battle action not taken, battle non action count = " . battleNonActions)
 			if (battleNonActions >= maxBattleNonActions)
 			{
-				updateLog("Battle non action count exceeded, clicking Vee dialog and Next button")
+				updateLog("Battle non action count exceeded")
+				RandomClick(next_button_X, next_button_Y, clickVariance)
 				battleNonActions := 0
-				
-				;RandomClick(vee_dialog_X, vee_dialog_Y, clickVariance)
-				;Sleep, % default_button_delay
-				;RandomClick(next_button_X, next_button_Y, clickVariance)
 			}
 			else
 			{
@@ -90,6 +93,7 @@ If (sURL != "")
 			resultsScreenCycles := 0
 			updateLog("Going to Coop Home page")
 			GoToPage(coopHomeURL)
+			globalTimeout := 0
 		}
 		continue
 	}
@@ -105,12 +109,14 @@ If (sURL != "")
 		{
 			updateLog("Room full detected, refreshing page")
 			GoToPage(coopJoinURL)
+			globalTimeout := 0
 			Sleep, % default_interval
 		}
 		else if InStr(searchResult, coopjoin_join_header)
 		{
 			updateLog("Requirements not met, refreshing page")
 			GoToPage(coopJoinURL)
+			globalTimeout := 0
 			Sleep, % default_interval
 		}
 		else if InStr(searchResult, coopjoin_refresh)
@@ -180,6 +186,7 @@ If (sURL != "")
 			coopHomeCycles := 0
 			updateLog("Going to Coop Join page")
 			GotoPage(coopJoinURL)
+			globalTimeout := 0
 			Sleep, % default_interval
 		}
 		continue
