@@ -4,7 +4,7 @@
 
 ;Coordinates
 global last_hosted_X := 580
-global last_hosted_Y := 745
+global last_hosted_Y := 760
 
 global attack_button_X := 525
 global attack_button_Y := 575
@@ -23,6 +23,9 @@ global ready_button_Y := 856
 
 global select_party_button_X := 370
 global select_party_button_Y := 1020
+
+global select_summon_ok_X := 515
+global select_summon_ok_Y := 915
 
 global first_favorite_X := 368
 global first_favorite_Y := 760
@@ -122,7 +125,7 @@ global GBF_winWidth := 700
 global image_path := "image/"
 
 global attack_button := "attack_button.png"
-global attack_button_2 := "2_attack_button.png"
+global attack_button_2 := "attack_button_2.png"
 
 global wind_icon := "wind_icon.png"
 global wind_icon_selected := "wind_icon_selected.png"
@@ -135,6 +138,8 @@ global use_skill := "use_skill.png"
 
 global select_party_auto_select := "select_party_auto_select.png"
 global select_party_auto_select_2 := "2_select_party_auto_select.png"
+
+global special_members := "special_members.png"
 
 global retreat_ok := "retreat_ok.png"
 
