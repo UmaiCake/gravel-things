@@ -41,11 +41,8 @@ If (sURL != "")
 	if InStr(sURL, searchStage)
 	{
 		updateLog("-----In Stage-----")
-		RandomClick(stage_ok_X, stage_ok_Y1, clickVariance)
-		Sleep, % default_interval 
-		RandomClick(stage_ok_X, stage_ok_Y2, clickVariance)
-		Sleep, % default_interval 
-		continue
+		updateLog("Going to GW battle")
+		GoToPage(guildWarsFightURL)
 	}
 	if InStr(sURL, searchBattle)
 	{
@@ -54,17 +51,24 @@ If (sURL != "")
 		battleActions := [attack_button, attack_button_2]
 		searchResult := multiImageSearch(coordX, coordY, battleActions)
 
-		if InStr(searchResult, attack_button)
+		if (InStr(searchResult, attack_button) or InStr(searchResult, attack_button_2))
 		{
 				updateLog("Start Battle Sequence")
 				
-				;ClickSkill(1, 2)
-				;ClickSkill(1, 3)
-				;ClickSkill(1, 4)
-				Send 1r
+				if(attackTurns >= 1)
+				{
+					updateLog("Not first turn")
+					Send 2e
+					Sleep, % default_button_delay
+					RandomClickWide(attack_button_X, attack_button_Y, clickVariance)			
+					continue
+				}
 				
-				Sleep, % default_button_delay
-				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)			
+				updateLog("First turn detected")
+				Send 1re4w3w1w3q4qe2wq1q
+				Sleep, % long_delay
+				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)		
+				attackTurns = attackTurns + 1
 		}
 		else
 		{
@@ -74,7 +78,7 @@ If (sURL != "")
 				updateLog("Battle non action count exceeded, clicking Next button")
 				battleNonActions := 0
 
-				RandomClick(next_button_X, next_button_Y, clickVariance)
+				;RandomClick(next_button_X, next_button_Y, clickVariance)
 			}
 			else
 			{
@@ -107,8 +111,8 @@ If (sURL != "")
 		if(resultScreenCycles >= waitResultMax)
 		{
 			resultsScreenCycles := 0
-			updateLog("Going to Quests page")
-			GoToPage(questURL)
+			updateLog("Going to GW battle")
+			GoToPage(guildWarsFightURL)
 		}
 		continue
 	}
@@ -131,7 +135,7 @@ If (sURL != "")
 	{
 		updateLog("-----In Select Summon-----")
 		
-		selectSummonAutoSelect := [select_party_auto_select, select_party_auto_select_2, special_members, misc_icon, misc_icon_selected]
+		selectSummonAutoSelect := [select_party_auto_select, select_party_auto_select_2, special_members, dark_icon, dark_icon_selected]
 		searchResult := multiImageSearch(coordX, coordY, selectSummonAutoSelect)
 		
 		if InStr(searchResult, select_party_auto_select)
@@ -146,15 +150,15 @@ If (sURL != "")
 			updateLog("Special Member dialog found, clicking OK button")
 			RandomClick(select_summon_ok_X, select_summon_ok_Y, clickVariance)
 		}
-		else if InStr(searchResult, misc_icon)
+		else if InStr(searchResult, dark_icon)
 		{
 			updateLog("Clicking on summon icon")
-			RandomClick(misc_summon_X, misc_summon_Y, clickVariance)
+			RandomClick(dark_summon_X, dark_summon_Y, clickVariance)
 		}
-		else if InStr(searchResult, misc_icon_selected)
+		else if InStr(searchResult, dark_icon_selected)
 		{
-			updateLog("Clicking on first summon")
-			RandomClick(first_summon_X, first_summon_Y, clickVariance) 
+			updateLog("Please select a summon")
+			RandomClick(first_summon_X, first_summon_Y+40, clickVariance) 
 		}
 		continue
 	}
@@ -214,12 +218,18 @@ If (sURL != "")
 
 		continue
 	}	
-	else if InStr(sURL, mypage)
+	else if InStr(sURL, searchMypage)
 	{
 		updateLog("-----In Home Page-----")
-		updateLog("Going to Quest page")
-		GoToPage(questURL)
+		updateLog("Going to GW battle")
+		GoToPage(guildWarsFightURL)	
 		continue
+	}
+	else if InStr(sURL, guildWarsURL)
+	{
+		updateLog("-----In GW Page-----")
+		updateLog("Going to GW battle")
+		GoToPage(guildWarsFightURL)		
 	}
 	else
 	{

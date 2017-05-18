@@ -1,10 +1,11 @@
 #Include gbfscriptConfigUtilities.ahk
 
-SetTimer, ForceExitApp, 3600000 ; 1h20 minutes
+SetTimer, ForceExitApp, 5000000
 
-global maxAttackTurns := 10
+global maxAttackTurns := 2
 global maxBattleNonActions := 2
 global maxBattles := 999
+global maxGlobalTimeout := 10
 
 Gui, Add, ListView, x6 y6 w400 h500 vLogbox LVS_REPORT, %A_Now%|Activity
  LV_ModifyCol(1, 60)
@@ -37,34 +38,46 @@ WinGetClass, sClass, A
 If (sURL != "")
 {
 	;updateLog("The URL is : " . sURL)
-
+	If (globalTimeout >= maxGlobalTimeout)
+	{
+		updateLog("Max Timeout Exceeded")
+		updateLog("Going to Quests page")
+		GoToPage(questURL)
+		globalTimeout := 0
+	}
+	
 	if InStr(sURL, searchStage)
 	{
 		updateLog("-----In Stage-----")
-		RandomClick(stage_ok_X, stage_ok_Y1, clickVariance)
-		Sleep, % default_interval 
-		RandomClick(stage_ok_X, stage_ok_Y2, clickVariance)
-		Sleep, % default_interval 
+		updateLog("Going to Quest page")
+		GoToPage(questURL)
 		continue
+
 	}
 	if InStr(sURL, searchBattle)
 	{
 		updateLog("-----In Battle-----")
-		
+		globalTimeout := 0
 		battleActions := [attack_button, attack_button_2]
 		searchResult := multiImageSearch(coordX, coordY, battleActions)
-
+		updateLog("Attack turns = " . attackTurns)
+		if(attackTurns >= maxAttackTurns)
+		{
+			updateLog("Max attack turns reached")
+			updateLog("Going to Quest page")
+			GoToPage(questURL)
+			attackTurns := 0
+			continue
+		}
 		if InStr(searchResult, attack_button)
 		{
 				updateLog("Start Battle Sequence")
 				
-				;ClickSkill(1, 2)
-				;ClickSkill(1, 3)
-				;ClickSkill(1, 4)
-				Send 1r
+				Send 4w1r2q3qw
 				
 				Sleep, % default_button_delay
-				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)			
+				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)	
+				attackTurns := attackTurns + 1
 		}
 		else
 		{
@@ -137,8 +150,8 @@ If (sURL != "")
 		if InStr(searchResult, select_party_auto_select)
 		{
 			updateLog("Party Confirm detected, clicking OK button")
-			
 			RandomClick(coordX + 197, coordY + 201, clickVariance) 
+			globalTimeout := 0
 			continue
 		}
 		else if InStr(searchResult, special_members)
@@ -149,69 +162,50 @@ If (sURL != "")
 		else if InStr(searchResult, misc_icon)
 		{
 			updateLog("Clicking on summon icon")
-			RandomClick(misc_summon_X, misc_summon_Y, clickVariance)
+			RandomClick(misc_summon_X, misc_summon_Y+40, clickVariance)
+			globalTimeout := 0
 		}
 		else if InStr(searchResult, misc_icon_selected)
 		{
 			updateLog("Clicking on first summon")
-			RandomClick(first_summon_X, first_summon_Y, clickVariance) 
+			RandomClick(first_summon_X, first_summon_Y+40, clickVariance) 
+			globalTimeout := 0
 		}
 		continue
 	}
 	else if InStr(sURL, searchQuest)
 	{
-		updateLog("-----In Quests Screen-----")
+		updateLog("-----In Quests Screen-----")					
+		Sleep, % default_interval
 		
-		questActions := [view_story, use_item, not_enough_ap, favorites_button, featured_button]
+		questActions := [vmate_join, vmate_refill, vmate_ok]
 		searchResult := multiImageSearch(coordX, coordY, questActions)
-
-		if InStr(searchResult, favorites_button)
+		
+		if InStr(searchResult, vmate_join)
 		{
-			updateLog("Confirming Special button")
-			if(!ImageSearchWrapper(coordX, coordY, special))
-			{
-				MsgBox, 4,, Special button not found - continue?
-				IfMsgBox Yes
-					continue
-				else
-					ExitApp
-			}
-			
-			updateLog("Favorites button found, clicking")
-			RandomClick(favorites_button_X, favorites_button_Y, clickVariance)
-			Sleep, % default_interval  * 3
+			updateLog("VMate join raid button found, clicking")
+			RandomClick(vmate_joinraid_X, vmate_joinraid_Y, clickVarianceSmall)
+			Sleep, % default_interval
+			globalTimeout := 0
 		}
-		else if InStr(searchResult, featured_button)
+		else if InStr(searchResult, vmate_refill)
 		{
-			updateLog("Featured button found, clicking on first favorite")
-			RandomClick(first_favorite_X, first_favorite_Y, clickVariance)
-			Sleep, % default_interval  * 3
+			updateLog("VMate refill button found, clicking")
+			RandomClick(vmate_refill_X, vmate_refill_Y, clickVarianceSmall)
+			Sleep, medium_interval
+			globalTimeout := 0
 		}
-		else if InStr(searchResult, not_enough_ap)
+		else if InStr(searchResult, vmate_ok)
 		{
-			updateLog("Not Enough AP dialog found, clicking Use button")
-			RandomClick(coordX + 206, coordY + 490, clickVariance)
+			updateLog("VMate OK button found, something went wrong")
+			RandomClick(vmate_ok_X, vmate_ok_Y, clickVarianceSmall)
 		}
-		else if InStr(searchResult, use_item)
+		else
 		{
-			updateLog("Use Item dialog found, clicking OK button")
-			RandomClick(use_item_ok_X, use_item_ok_Y, clickVariance)
+			updateLog("Clicking VMate icon")
+			RandomClick(vmate_icon_X, vmate_icon_Y, clickVarianceSmall)
 		}
-		else if InStr(searchResult, view_story)
-		{
-			updateLog("Story dialog found, clicking episode")
-			RandomClick(story_X, story_3_Y, clickVariance)	
-			Sleep, % default_interval * 2
-			RandomClick(story_ok_X, story_ok_Y-75, clickVariance)	
-			Sleep, % default_interval 	
-			RandomClick(story_ok_X, story_ok_Y-50, clickVariance)	
-			Sleep, % default_interval 	
-			RandomClick(story_ok_X, story_ok_Y-25, clickVariance)	
-			Sleep, % default_interval 	
-			RandomClick(story_ok_X, story_ok_Y, clickVariance)	
-			Sleep, % default_interval 			
-		}
-
+		
 		continue
 	}	
 	else if InStr(sURL, mypage)

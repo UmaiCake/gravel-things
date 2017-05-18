@@ -10,11 +10,11 @@ SetKeyDelay, 100
 Send 4w3w2q1w3q4qe2e1er
 Return
 
-
 ;SR hards
 +F2::
 SetKeyDelay, 100
-Send 4wq1wer2wqe3wq
+;Send 4wq1wer2wqe3wq
+Send 4w1wer2q3w
 Return
 
 ;SR leech
@@ -29,11 +29,24 @@ SetKeyDelay, 100
 Send 4e1rqwe2qw3qe4q
 Return
 
+;Wind
++F4::
+SetKeyDelay, 100
+Send 1r4w3ew1we4qe1q2q3q
+Return
+
+;Water
 +F5::
 SetKeyDelay, 100
+Send 4qe3qwe1rqwe4w2q
+
+;Dirt
++F6::
+SetKeyDelay, 100
+Send 3w1rqwe2qw3q
 
 ;fen60
-Send 4wqe1wer2q3qw1q
+;Send 4wqe1wer2q3qw1q
 
 ;genbu
 ;Send 4e3eq2e1rqwe4w2qw3w

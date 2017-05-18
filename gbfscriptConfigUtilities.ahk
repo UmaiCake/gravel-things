@@ -3,6 +3,18 @@
 ;----------------------------------------------
 
 ;Coordinates
+global vmate_icon_X := 605
+global vmate_icon_Y := 70
+
+global vmate_joinraid_X := 130
+global vmate_joinraid_Y := 30
+
+global vmate_refill_X := 120
+global vmate_refill_Y := 140
+
+global vmate_ok_X := 150
+global vmate_ok_Y := 500
+
 global last_hosted_X := 580
 global last_hosted_Y := 760
 
@@ -47,6 +59,9 @@ global wind_summon_Y := 402
 
 global misc_summon_X := 604
 global misc_summon_Y := 402
+
+global dark_summon_X := 485
+global dark_summon_Y := 402
 
 global auto_button_X := 128 
 global auto_button_Y := 609
@@ -114,7 +129,8 @@ global searchGuildWars := "teamraid"
 global coopHomeURL := "http://game.granbluefantasy.jp/#coopraid"
 global coopJoinURL := "http://game.granbluefantasy.jp/#coopraid/offer"
 global questURL := "http://game.granbluefantasy.jp/#quest"
-global guildWarsURL := "http://game.granbluefantasy.jp/#event/teamraid025"
+global guildWarsURL := "http://game.granbluefantasy.jp/#event/teamraid030"
+global guildWarsFightURL := "http://game.granbluefantasy.jp/#event/teamraid030/supporter/718661/1"
 global rabbitURL:= "http://game.granbluefantasy.jp/#quest/supporter/713431/0"
 
 
@@ -133,6 +149,8 @@ global misc_icon := "misc_icon.png"
 global misc_icon_selected := "misc_icon_selected.png"
 global fire_icon := "fire_icon.png"
 global fire_icon_selected := "fire_icon_selected.png"
+global dark_icon := "dark_icon.png"
+global dark_icon_selected := "dark_icon_selected.png"
 
 global use_skill := "use_skill.png"
 
@@ -165,7 +183,7 @@ global last_hosted := "last_hosted.png"
 
 global tap_start := "tap_start.png"
 
-
+global special := "special.png"
 global favorites_button := "favorites_button.png"
 
 global featured_button := "featured_button.png"
@@ -185,6 +203,12 @@ global view_story := "view_story.png"
 global story_summary := "story_summary.png"
 
 global mole_icon := "mole.png"
+
+global vmate_join := "vmate_join.png"
+
+global vmate_refill := "vmate_refill.png"
+
+global vmate_ok := "vmate_ok.png"
 
 ;Time intervals
 global default_button_delay := 500
@@ -207,7 +231,7 @@ global waitCoopHomeMax := 7
 global waitResultMax := 3
 global cardSearchLoops := 10
 
-
+SetKeyDelay, 100
 
 ;----------------------------------------------
 ;ImageSearch wrappers

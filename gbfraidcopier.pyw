@@ -15,15 +15,14 @@ config = configparser.ConfigParser()
 config.read('gbfraidcopier.cfg')
 
 
-raidCount = 7
+raidCount = 6
 trk = [0]*raidCount
 cpyOn = [0]*raidCount
 sndOn = [0]*raidCount
 names = [
     "Huanglong",
     "Qilin",
-    "Michael",
-    "Rapahel",    
+    "Dark Angel Olivia",
     "Proto Bahamut",
     "The Grand Order",
     "Chevalier HL"
@@ -31,8 +30,7 @@ names = [
 enSearchStrings = [
     u"Lvl 100 Huanglong",
     u"Lvl 100 Qilin",
-    u"Lvl 100 Michael",
-    u"Lvl 100 Raphael",
+    u"Lvl 100 Dark Agnel Olivia",
     u"Lvl 100 Proto Bahamut",
     u"Lvl 100 The Grand Order",
     u"Lvl 100 Chevalier Omega"
@@ -40,8 +38,7 @@ enSearchStrings = [
 jpSearchStrings = [
     u"Lv100 黄龍",
     u"Lv100 黒麒麟",
-    u"Lv100 ミカエル",
-    u"Lv100 ラファエル",
+    u"Lv100 Dエンジェル・オリヴィエ",
     u"Lv100 プロトバハムート",
     u"Lv100 ジ・オーダー・グランデ",
     u"Lv100 シュヴァリエ・マグナ"
@@ -54,7 +51,7 @@ class TwitterStreamListener(tweepy.StreamListener):
         json_load = json.loads(data)
         texts = json_load['text']
         coded = texts.encode('utf-8')
-        st = unicode(coded, encoding='utf-8')
+        st = str(coded, encoding='utf-8')
 		
         for i in range(0, raidCount):
             if (trk[i] or sndOn[i] or cpyOn[i]) and (st.find(enSearchStrings[i]) != -1 or st.find(jpSearchStrings[i]) != -1):

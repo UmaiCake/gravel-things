@@ -1,9 +1,10 @@
 #Include gbfscriptConfigUtilities.ahk
 
-SetTimer, ForceExitApp, 5000000 ; 1h20 minutes
+SetTimer, ForceExitApp, 3600000 ; 1h
 
 global maxAttackTurns := 999
 global maxBattleNonActions := 3
+global maxGlobalTimeout := 8
 
 Gui, Add, ListView, x6 y6 w400 h500 vLogbox LVS_REPORT, %A_Now%|Activity
  LV_ModifyCol(1, 60)
@@ -15,7 +16,6 @@ Gui, Add, ListView, x6 y6 w400 h500 vLogbox LVS_REPORT, %A_Now%|Activity
 ;----------------------------------------------
 
 global globalTimeout := 0
-global maxGlobalTimeout := 8
 global attackTurns := 0
 global coopHomeCycles := 0
 global resultScreenCycles := 0
@@ -55,23 +55,12 @@ If (sURL != "")
 		{
 				updateLog("Start Battle Sequence")
 				
-				;ClickSkill(4, 2)
-				;ClickSkill(1, 4)
-				;ClickSkill(3, 2)
-				;ClickSkill(3, 1)
-				;ClickSkill(2, 2)
+				Send 4w2q3w
+				Sleep, % default_button_delay
 				
-				ClickSkill(2, 2)
-				;ClickSkill(2, 2)
-				;ClickSkill(2, 2)
-
-				Send, {F5}
-				;ClickSkill(3, 2)
-				
-				;ClickSkill(1, 1)
-				
-				;Sleep, % default_button_delay
 				;RandomClickWide(attack_button_X, attack_button_Y, clickVariance)
+				
+				;Send, {F5}
 				globalTimeout := 0
 		}
 		else
