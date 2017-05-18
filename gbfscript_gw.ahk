@@ -66,6 +66,7 @@ If (sURL != "")
 				
 				updateLog("First turn detected")
 				Send 1re4w3w1w3q4qe2wq1q
+				;Send 4e3w1we3q2q
 				Sleep, % long_delay
 				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)		
 				attackTurns = attackTurns + 1
@@ -165,58 +166,8 @@ If (sURL != "")
 	else if InStr(sURL, searchQuest)
 	{
 		updateLog("-----In Quests Screen-----")
-		
-		questActions := [view_story, use_item, not_enough_ap, favorites_button, featured_button]
-		searchResult := multiImageSearch(coordX, coordY, questActions)
-
-		if InStr(searchResult, favorites_button)
-		{
-			updateLog("Confirming Special button")
-			if(!ImageSearchWrapper(coordX, coordY, special))
-			{
-				MsgBox, 4,, Special button not found - continue?
-				IfMsgBox Yes
-					continue
-				else
-					ExitApp
-			}
-			
-			updateLog("Favorites button found, clicking")
-			RandomClick(favorites_button_X, favorites_button_Y, clickVariance)
-			Sleep, % default_interval  * 3
-		}
-		else if InStr(searchResult, featured_button)
-		{
-			updateLog("Featured button found, clicking on first favorite")
-			RandomClick(first_favorite_X, first_favorite_Y, clickVariance)
-			Sleep, % default_interval  * 3
-		}
-		else if InStr(searchResult, not_enough_ap)
-		{
-			updateLog("Not Enough AP dialog found, clicking Use button")
-			RandomClick(coordX + 206, coordY + 490, clickVariance)
-		}
-		else if InStr(searchResult, use_item)
-		{
-			updateLog("Use Item dialog found, clicking OK button")
-			RandomClick(use_item_ok_X, use_item_ok_Y, clickVariance)
-		}
-		else if InStr(searchResult, view_story)
-		{
-			updateLog("Story dialog found, clicking episode")
-			RandomClick(story_X, story_3_Y, clickVariance)	
-			Sleep, % default_interval * 2
-			RandomClick(story_ok_X, story_ok_Y-75, clickVariance)	
-			Sleep, % default_interval 	
-			RandomClick(story_ok_X, story_ok_Y-50, clickVariance)	
-			Sleep, % default_interval 	
-			RandomClick(story_ok_X, story_ok_Y-25, clickVariance)	
-			Sleep, % default_interval 	
-			RandomClick(story_ok_X, story_ok_Y, clickVariance)	
-			Sleep, % default_interval 			
-		}
-
-		continue
+		updateLog("Going to GW battle")
+		GoToPage(guildWarsFightURL)
 	}	
 	else if InStr(sURL, searchMypage)
 	{
