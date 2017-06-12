@@ -7,14 +7,15 @@ Return
 ;Chev
 +F1::
 SetKeyDelay, 100
-Send 4w3w2q1w3q4qe2e1er
+Send 4w2q1we3wq4qe2e1r
 Return
 
 ;SR hards
 +F2::
 SetKeyDelay, 100
+Send 4wq1wer2wq
 ;Send 4wq1wer2wqe3wq
-Send 4w1wer2q3w
+;Send 4w1wer2q3w
 Return
 
 ;SR leech

@@ -3,6 +3,9 @@
 ;----------------------------------------------
 
 ;Coordinates
+global pending_first_X := 360
+global pending_first_Y := 360
+
 global vmate_icon_X := 605
 global vmate_icon_Y := 70
 
@@ -125,6 +128,7 @@ global searchSelectSummon := "supporter"
 global searchResults := "result"
 global searchScene := "scene"
 global searchGuildWars := "teamraid"
+global searchPending := "unclaimed"
 
 global coopHomeURL := "http://game.granbluefantasy.jp/#coopraid"
 global coopJoinURL := "http://game.granbluefantasy.jp/#coopraid/offer"
@@ -132,6 +136,7 @@ global questURL := "http://game.granbluefantasy.jp/#quest"
 global guildWarsURL := "http://game.granbluefantasy.jp/#event/teamraid030"
 global guildWarsFightURL := "http://game.granbluefantasy.jp/#event/teamraid030/supporter/718661/1"
 global rabbitURL:= "http://game.granbluefantasy.jp/#quest/supporter/713431/0"
+global pendingURL := "http://game.granbluefantasy.jp/#quest/assist/unclaimed"
 
 
 global GBF_winHeight := 1080
@@ -209,6 +214,8 @@ global vmate_join := "vmate_join.png"
 global vmate_refill := "vmate_refill.png"
 
 global vmate_ok := "vmate_ok.png"
+
+global ok_button := "ok_button.png"
 
 ;Time intervals
 global default_button_delay := 500

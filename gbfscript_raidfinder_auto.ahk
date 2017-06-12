@@ -2,7 +2,7 @@
 
 SetTimer, ForceExitApp, 5000000
 
-global maxAttackTurns := 2
+global maxAttackTurns := 4
 global maxBattleNonActions := 2
 global maxBattles := 999
 global maxGlobalTimeout := 10
@@ -41,20 +41,20 @@ If (sURL != "")
 	If (globalTimeout >= maxGlobalTimeout)
 	{
 		updateLog("Max Timeout Exceeded")
-		updateLog("Going to Quests page")
-		GoToPage(questURL)
+		updateLog("Going to Pending page")
+		GoToPage(pendingURL)
 		globalTimeout := 0
 	}
-	
-	if InStr(sURL, searchStage)
+		
+	else if InStr(sURL, searchStage)
 	{
 		updateLog("-----In Stage-----")
-		updateLog("Going to Quest page")
-		GoToPage(questURL)
+		updateLog("Going to Pending page")
+		GoToPage(pendingURL)
 		continue
 
 	}
-	if InStr(sURL, searchBattle)
+	else if InStr(sURL, searchBattle)
 	{
 		updateLog("-----In Battle-----")
 		globalTimeout := 0
@@ -64,8 +64,8 @@ If (sURL != "")
 		if(attackTurns >= maxAttackTurns)
 		{
 			updateLog("Max attack turns reached")
-			updateLog("Going to Quest page")
-			GoToPage(questURL)
+			updateLog("Going to Pending page")
+			GoToPage(pendingURL)
 			attackTurns := 0
 			continue
 		}
@@ -73,7 +73,8 @@ If (sURL != "")
 		{
 				updateLog("Start Battle Sequence")
 				
-				Send 4w1r2q3qw
+				Send 4w1r2q3qw4qe
+				;Send  1r2wqe3qwe4qw
 				
 				Sleep, % default_button_delay
 				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)	
@@ -87,7 +88,7 @@ If (sURL != "")
 				updateLog("Battle non action count exceeded, clicking Next button")
 				battleNonActions := 0
 
-				RandomClick(next_button_X, next_button_Y, clickVariance)
+				;RandomClick(next_button_X, next_button_Y, clickVariance)
 			}
 			else
 			{
@@ -120,8 +121,8 @@ If (sURL != "")
 		if(resultScreenCycles >= waitResultMax)
 		{
 			resultsScreenCycles := 0
-			updateLog("Going to Quests page")
-			GoToPage(questURL)
+			updateLog("Going to Pending page")
+			GoToPage(pendingURL)
 		}
 		continue
 	}
@@ -173,13 +174,15 @@ If (sURL != "")
 		}
 		continue
 	}
-	else if InStr(sURL, searchQuest)
+	else if InStr(sURL, searchPending)
 	{
-		updateLog("-----In Quests Screen-----")					
-		Sleep, % default_interval
+		updateLog("-----In Pending Screen-----")					
+
+		;Send  {Space}
+		Sleep, % default_interval		
 		
-		questActions := [vmate_join, vmate_refill, vmate_ok]
-		searchResult := multiImageSearch(coordX, coordY, questActions)
+		pendingActions := [vmate_join, vmate_refill, vmate_ok, ok_button]
+		searchResult := multiImageSearch(coordX, coordY, pendingActions)
 		
 		if InStr(searchResult, vmate_join)
 		{
@@ -192,13 +195,28 @@ If (sURL != "")
 		{
 			updateLog("VMate refill button found, clicking")
 			RandomClick(vmate_refill_X, vmate_refill_Y, clickVarianceSmall)
-			Sleep, medium_interval
+			Sleep, % medium_interval
 			globalTimeout := 0
 		}
 		else if InStr(searchResult, vmate_ok)
 		{
-			updateLog("VMate OK button found, something went wrong")
-			RandomClick(vmate_ok_X, vmate_ok_Y, clickVarianceSmall)
+			updateLog("VMate OK button found, raid was not joined")
+			RandomClick(vmate_ok_X, vmate_ok_Y, clickVariance)
+			Sleep, % default_interval
+			
+			updateLog("Clicking first pending")
+			RandomClick(pending_first_X, pending_first_Y, clickVariance)	
+			Sleep, % medium_interval
+		}
+		else if InStr(searchResult, ok_button)
+		{
+			updateLog("Dialog found, pressing space")
+			Send {Space}
+			Sleep, % default_interval
+			
+			updateLog("Clicking first pending")
+			RandomClick(pending_first_X, pending_first_Y, clickVariance)	
+			Sleep, % medium_interval
 		}
 		else
 		{
@@ -208,11 +226,18 @@ If (sURL != "")
 		
 		continue
 	}	
+	else if InStr(sURL, searchQuest)
+	{
+		updateLog("-----In Quest Page-----")
+		updateLog("Going to Pending page")
+		GoToPage(pendingURL)
+		continue	
+	}
 	else if InStr(sURL, mypage)
 	{
 		updateLog("-----In Home Page-----")
-		updateLog("Going to Quest page")
-		GoToPage(questURL)
+		updateLog("Going to Pending page")
+		GoToPage(pendingURL)
 		continue
 	}
 	else

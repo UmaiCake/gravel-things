@@ -15,7 +15,7 @@ config = configparser.ConfigParser()
 config.read('gbfraidcopier.cfg')
 
 
-raidCount = 6
+raidCount = 8
 trk = [0]*raidCount
 cpyOn = [0]*raidCount
 sndOn = [0]*raidCount
@@ -23,6 +23,8 @@ names = [
     "Huanglong",
     "Qilin",
     "Dark Angel Olivia",
+    "Athena",
+    "Twin Elements",
     "Proto Bahamut",
     "The Grand Order",
     "Chevalier HL"
@@ -31,6 +33,8 @@ enSearchStrings = [
     u"Lvl 100 Huanglong",
     u"Lvl 100 Qilin",
     u"Lvl 100 Dark Agnel Olivia",
+    u"Lvl 100 Athena",
+    u"Lvl 100 Twin Elements",
     u"Lvl 100 Proto Bahamut",
     u"Lvl 100 The Grand Order",
     u"Lvl 100 Chevalier Omega"
@@ -39,6 +43,8 @@ jpSearchStrings = [
     u"Lv100 黄龍",
     u"Lv100 黒麒麟",
     u"Lv100 Dエンジェル・オリヴィエ",
+    u"Lv100 アテナ",
+    u"Lv100 フラム＝グラス",
     u"Lv100 プロトバハムート",
     u"Lv100 ジ・オーダー・グランデ",
     u"Lv100 シュヴァリエ・マグナ"
