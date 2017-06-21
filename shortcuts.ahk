@@ -13,8 +13,7 @@ Return
 ;SR hards
 +F2::
 SetKeyDelay, 100
-Send 4wq1wer2wq
-;Send 4wq1wer2wqe3wq
+Send 4wq1wer2wqe3wq
 ;Send 4w1wer2q3w
 Return
 
@@ -39,12 +38,12 @@ Return
 ;Water
 +F5::
 SetKeyDelay, 100
-Send 4qe3qwe1rqwe4w2q
+Send 4q3qwe1rqwe4w2q
 
 ;Dirt
 +F6::
 SetKeyDelay, 100
-Send 3w1rqwe2qw3q
+Send 4q3w2e1rqwe2qw3q
 
 ;fen60
 ;Send 4wqe1wer2q3qw1q

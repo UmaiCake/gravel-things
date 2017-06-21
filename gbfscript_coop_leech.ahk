@@ -4,7 +4,7 @@ SetTimer, ForceExitApp, 3600000 ; 1h
 
 global maxAttackTurns := 999
 global maxBattleNonActions := 3
-global maxGlobalTimeout := 8
+global maxGlobalTimeout := 6
 
 Gui, Add, ListView, x6 y6 w400 h500 vLogbox LVS_REPORT, %A_Now%|Activity
  LV_ModifyCol(1, 60)
@@ -51,16 +51,18 @@ If (sURL != "")
 		battleActions := [attack_button, attack_button_2]
 		searchResult := multiImageSearch(coordX, coordY, battleActions)
 
-		if InStr(searchResult, attack_button)
+		if(InStr(searchResult, attack_button) or InStr(searchResult, attack_button_2))
 		{
 				updateLog("Start Battle Sequence")
 				
-				Send 4w2q3w
+				;Send 4w3w2w
+				Send 1q				
 				Sleep, % default_button_delay
+				Send, {F5}
 				
 				;RandomClickWide(attack_button_X, attack_button_Y, clickVariance)
 				
-				;Send, {F5}
+				
 				globalTimeout := 0
 		}
 		else
@@ -110,7 +112,7 @@ If (sURL != "")
 
 		if InStr(searchResult, wait_quest_start)
 		{
-			updateLog("Waiting for quest to start, Ready status confirmed")
+			updateLog("Waiting for quest to start, Ready status confirmed")			
 			globalTimeout := 0
 		}
 		else if InStr(searchResult, select_support)
@@ -126,6 +128,11 @@ If (sURL != "")
 			;Sleep to prevent re-click
 			Sleep, % post_ready_button_delay
 			globalTimeout := 0
+		}
+		else 
+		{
+			updateLog("No quest found, clicking refresh")
+			RandomClick(coop_refresh_X, coop_refresh_Y, clickVariance)
 		}
 		continue
 	}

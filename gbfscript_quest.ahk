@@ -42,7 +42,7 @@ If (sURL != "")
 	{
 		updateLog("-----In Stage-----")
 		updateLog("Going to GW battle")
-		GoToPage(guildWarsFightURL)
+		GoToPage(repeatQuestURL)
 	}
 	if InStr(sURL, searchBattle)
 	{
@@ -58,15 +58,15 @@ If (sURL != "")
 				if(attackTurns >= 1)
 				{
 					updateLog("Not first turn")
-					Send 2e
+					Send 1wer2qw3qe4q
 					Sleep, % default_button_delay
 					RandomClickWide(attack_button_X, attack_button_Y, clickVariance)			
 					continue
 				}
 				
 				updateLog("First turn detected")
-				Send 1re4w3w1w3q4qe2wq1q
-				;Send 4e3w1we3q2q
+				Send 1wer2q3qe4q
+
 				Sleep, % long_delay
 				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)		
 				attackTurns = attackTurns + 1
@@ -113,7 +113,7 @@ If (sURL != "")
 		{
 			resultsScreenCycles := 0
 			updateLog("Going to GW battle")
-			GoToPage(guildWarsFightURL)
+			GoToPage(repeatQuestURL)
 		}
 		continue
 	}
@@ -136,7 +136,7 @@ If (sURL != "")
 	{
 		updateLog("-----In Select Summon-----")
 		
-		selectSummonAutoSelect := [select_party_auto_select, select_party_auto_select_2, special_members, dark_icon, dark_icon_selected]
+		selectSummonAutoSelect := [select_party_auto_select, select_party_auto_select_2, special_members, wind_icon, wind_icon_selected]
 		searchResult := multiImageSearch(coordX, coordY, selectSummonAutoSelect)
 		
 		if InStr(searchResult, select_party_auto_select)
@@ -151,12 +151,12 @@ If (sURL != "")
 			updateLog("Special Member dialog found, clicking OK button")
 			RandomClick(select_summon_ok_X, select_summon_ok_Y, clickVariance)
 		}
-		else if InStr(searchResult, dark_icon)
+		else if InStr(searchResult, wind_icon)
 		{
 			updateLog("Clicking on summon icon")
-			RandomClick(dark_summon_X, dark_summon_Y, clickVariance)
+			RandomClick(wind_summon_X, wind_summon_Y, clickVariance)
 		}
-		else if InStr(searchResult, dark_icon_selected)
+		else if InStr(searchResult, wind_icon_selected)
 		{
 			updateLog("Please select a summon")
 			RandomClick(first_summon_X, first_summon_Y+40, clickVariance) 
@@ -166,21 +166,21 @@ If (sURL != "")
 	else if InStr(sURL, searchQuest)
 	{
 		updateLog("-----In Quests Screen-----")
-		updateLog("Going to GW battle")
-		GoToPage(guildWarsFightURL)
+		updateLog("Going to quest")
+		GoToPage(repeatQuestURL)
 	}	
 	else if InStr(sURL, searchMypage)
 	{
 		updateLog("-----In Home Page-----")
 		updateLog("Going to GW battle")
-		GoToPage(guildWarsFightURL)	
+		GoToPage(repeatQuestURL)	
 		continue
 	}
 	else if InStr(sURL, guildWarsURL)
 	{
 		updateLog("-----In GW Page-----")
 		updateLog("Going to GW battle")
-		GoToPage(guildWarsFightURL)		
+		GoToPage(repeatQuestURL)		
 	}
 	else
 	{

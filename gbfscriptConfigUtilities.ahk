@@ -3,6 +3,9 @@
 ;----------------------------------------------
 
 ;Coordinates
+global coop_refresh_X := 120
+global coop_refresh_Y := 575
+
 global pending_first_X := 360
 global pending_first_Y := 360
 
@@ -134,7 +137,7 @@ global coopHomeURL := "http://game.granbluefantasy.jp/#coopraid"
 global coopJoinURL := "http://game.granbluefantasy.jp/#coopraid/offer"
 global questURL := "http://game.granbluefantasy.jp/#quest"
 global guildWarsURL := "http://game.granbluefantasy.jp/#event/teamraid030"
-global guildWarsFightURL := "http://game.granbluefantasy.jp/#event/teamraid030/supporter/718661/1"
+global repeatQuestURL := "http://game.granbluefantasy.jp/#quest/supporter/719281/5"
 global rabbitURL:= "http://game.granbluefantasy.jp/#quest/supporter/713431/0"
 global pendingURL := "http://game.granbluefantasy.jp/#quest/assist/unclaimed"
 
