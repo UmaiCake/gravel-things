@@ -1,6 +1,6 @@
 #Include gbfscriptConfigUtilities.ahk
 
-SetTimer, ForceExitApp, 3600000 ; 1h20 minutes
+SetTimer, ForceExitApp, 3600000 
 
 global maxAttackTurns := 10
 global maxBattleNonActions := 2
@@ -16,7 +16,7 @@ Gui, Add, ListView, x6 y6 w400 h500 vLogbox LVS_REPORT, %A_Now%|Activity
 ;----------------------------------------------
 
 global globalTimeout := 0
-global attackTurns := 0
+global attackTurns := 1
 global coopHomeCycles := 0
 global resultScreenCycles := 0
 global battleNonActions := 0
@@ -54,13 +54,10 @@ If (sURL != "")
 		battleActions := [attack_button, attack_button_2]
 		searchResult := multiImageSearch(coordX, coordY, battleActions)
 
-		if InStr(searchResult, attack_button)
+		if(InStr(searchResult, attack_button) or InStr(searchResult, attack_button_2))
 		{
-				updateLog("Start Battle Sequence")
+				updateLog("-----Start Battle Sequence-----")
 				
-				;ClickSkill(1, 2)
-				;ClickSkill(1, 3)
-				;ClickSkill(1, 4)
 				Send 1r
 				
 				Sleep, % default_button_delay
@@ -78,7 +75,7 @@ If (sURL != "")
 			}
 			else
 			{
-				battleNonActions := battleNonActions + 1
+				battleNonActions += 1
 			}
 		}
 		continue
@@ -86,11 +83,11 @@ If (sURL != "")
 	else if InStr(sURL, searchResults)
 	{
 		updateLog("-----In Results Screen-----")
-		attackTurns := 0
+		attackTurns := 1
 		globalTimeout := 0
 		battleNonActions := 0
 		
-		battleCount := battleCount + 1
+		battleCount += 1
 		updateLog("Battle count: " . battleCount)
 		if(battleCount >= maxBattles)
 		{
@@ -101,7 +98,7 @@ If (sURL != "")
 				ExitApp
 		}
 		
-		resultScreenCycles := resultScreenCycles + 1
+		resultScreenCycles += 1
 		
 		updateLog("Results Screen cycles: " . resultScreenCycles)		
 		if(resultScreenCycles >= waitResultMax)
@@ -116,12 +113,10 @@ If (sURL != "")
 	else if InStr(sURL, searchCoopJoin)
 	{
 		updateLog("-----In Coop Join-----")
-
 	}
 	else if InStr(sURL, searchCoopRoom)
 	{
 		updateLog("-----In Coop Room-----")
-	
 	}
 	else if InStr(sURL, searchCoop)
 	{
@@ -131,14 +126,14 @@ If (sURL != "")
 	{
 		updateLog("-----In Select Summon-----")
 		
-		selectSummonAutoSelect := [select_party_auto_select, select_party_auto_select_2, special_members, misc_icon, misc_icon_selected]
+		selectSummonAutoSelect := [select_party_auto_select, select_party_auto_select_2, special_members, fav_icon, fav_icon_selected]
 		searchResult := multiImageSearch(coordX, coordY, selectSummonAutoSelect)
 		
-		if InStr(searchResult, select_party_auto_select)
+		if (InStr(searchResult, select_party_auto_select) or InStr(searchResult, select_party_auto_select_2))
 		{
 			updateLog("Party Confirm detected, clicking OK button")
 			
-			RandomClick(coordX + 197, coordY + 201, clickVariance) 
+			RandomClick(select_summon_ok_X, select_summon_ok_Y, clickVariance) 
 			continue
 		}
 		else if InStr(searchResult, special_members)
@@ -146,12 +141,12 @@ If (sURL != "")
 			updateLog("Special Member dialog found, clicking OK button")
 			RandomClick(select_summon_ok_X, select_summon_ok_Y, clickVariance)
 		}
-		else if InStr(searchResult, misc_icon)
+		else if InStr(searchResult, fav_icon)
 		{
 			updateLog("Clicking on summon icon")
-			RandomClick(misc_summon_X, misc_summon_Y, clickVariance)
+			RandomClick(fav_summon_X, fav_summon_Y, clickVariance)
 		}
-		else if InStr(searchResult, misc_icon_selected)
+		else if InStr(searchResult, fav_icon_selected)
 		{
 			updateLog("Clicking on first summon")
 			RandomClick(first_summon_X, first_summon_Y, clickVariance) 

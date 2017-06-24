@@ -69,6 +69,9 @@ global misc_summon_Y := 402
 global dark_summon_X := 485
 global dark_summon_Y := 402
 
+global fav_summon_X := 625
+global fav_summon_Y := 402
+
 global auto_button_X := 128 
 global auto_button_Y := 609
 
@@ -105,17 +108,6 @@ global battle_retreat_Y := 760
 global battle_retreat_confirm_X := 500
 global battle_retreat_confirm_Y := 520
 
-global poker_button_left_X := 235
-global poker_button_right_X := 380
-global poker_button_Y := 630
-
-
-;Vmate skill offsets (defunct)
-global skillX = 90
-global skillXOffset = 25
-global skillCharOffset = 103
-global skillY = 860
-
 ;URL Strings
 global ChromeBrowsers := "Chrome_WidgetWin_0,Chrome_WidgetWin_1"
 global searchPoker := "#casino/game/poker"
@@ -141,11 +133,12 @@ global repeatQuestURL := "http://game.granbluefantasy.jp/#quest/supporter/719281
 global rabbitURL:= "http://game.granbluefantasy.jp/#quest/supporter/713431/0"
 global pendingURL := "http://game.granbluefantasy.jp/#quest/assist/unclaimed"
 
-
 global GBF_winHeight := 1080
 global GBF_winWidth := 700
 
+
 ;----------Search Images------------;
+
 global image_path := "image/"
 
 global attack_button := "attack_button.png"
@@ -159,11 +152,13 @@ global fire_icon := "fire_icon.png"
 global fire_icon_selected := "fire_icon_selected.png"
 global dark_icon := "dark_icon.png"
 global dark_icon_selected := "dark_icon_selected.png"
+global fav_icon := "fav_icon.png"
+global fav_icon_selected := "fav_icon_selected.png"
 
 global use_skill := "use_skill.png"
 
 global select_party_auto_select := "select_party_auto_select.png"
-global select_party_auto_select_2 := "2_select_party_auto_select.png"
+global select_party_auto_select_2 := "select_party_auto_select_2.png"
 
 global special_members := "special_members.png"
 
@@ -447,7 +442,7 @@ RandomClick(coordX, coordY, variance)
 	Random, randX, 0 - variance, variance
 	Random, randY, 0 - variance, variance
 	
-	updateLog("Random coordinate modifiers: " . randX . ", " . randY)
+	;updateLog("Random coordinate modifiers: " . randX . ", " . randY)
 	
 	MouseMove coordX + randX, coordY + randY
 	Click
@@ -458,7 +453,7 @@ RandomClickWide(coordX, coordY, variance)
 	Random, randX, 0 - (variance*2), (variance*2)
 	Random, randY, 0 - variance, variance
 	
-	updateLog("Random coordinate modifiers: " . randX . ", " . randY)
+	;updateLog("Random coordinate modifiers: " . randX . ", " . randY)
 	
 	MouseMove coordX + randX, coordY + randY
 	Click
@@ -488,6 +483,15 @@ FindElementInArray(ByRef foundIndex, inputArray, findThis)
 		}
 	}
 	return null
+}
+
+ArrayContains(searchIn, searchFor) {
+	if !(IsObject(searchIn)) || (searchIn.Length() = 0)
+		return 0
+	for index, value in searchIn
+		if (value = searchFor)
+			return 1
+	return 0
 }
 
 ;----------------------------------------------

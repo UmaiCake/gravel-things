@@ -1,10 +1,13 @@
 #Include gbfscriptConfigUtilities.ahk
 
-SetTimer, ForceExitApp, 3600000 ; 1h20 minutes
+SetTimer, ForceExitApp, 3600000 
 
 global maxAttackTurns := 10
 global maxBattleNonActions := 2
 global maxBattles := 999
+
+SpecialTurns := [2, 3, 4]
+
 
 Gui, Add, ListView, x6 y6 w400 h500 vLogbox LVS_REPORT, %A_Now%|Activity
  LV_ModifyCol(1, 60)
@@ -16,7 +19,7 @@ Gui, Add, ListView, x6 y6 w400 h500 vLogbox LVS_REPORT, %A_Now%|Activity
 ;----------------------------------------------
 
 global globalTimeout := 0
-global attackTurns := 0
+global attackTurns := 1
 global coopHomeCycles := 0
 global resultScreenCycles := 0
 global battleNonActions := 0
@@ -41,49 +44,64 @@ If (sURL != "")
 	if InStr(sURL, searchStage)
 	{
 		updateLog("-----In Stage-----")
-		updateLog("Going to GW battle")
+		updateLog("Going to quest summon select")
 		GoToPage(repeatQuestURL)
 	}
 	if InStr(sURL, searchBattle)
 	{
 		updateLog("-----In Battle-----")
+		updateLog("Turn count: " . attackTurns)
 		
 		battleActions := [attack_button, attack_button_2]
-		searchResult := multiImageSearch(coordX, coordY, battleActions)
+		searchResult := multiImageSearch(coordX, coordY, battleActions)		
 
 		if (InStr(searchResult, attack_button) or InStr(searchResult, attack_button_2))
 		{
-				updateLog("Start Battle Sequence")
+			updateLog("-----Start Battle Sequence-----")	
+			
+			if(attackTurns <=1)
+			{
+				updateLog("1st turn action")
 				
-				if(attackTurns >= 1)
-				{
-					updateLog("Not first turn")
-					Send 1wer2qw3qe4q
-					Sleep, % default_button_delay
-					RandomClickWide(attack_button_X, attack_button_Y, clickVariance)			
-					continue
-				}
-				
-				updateLog("First turn detected")
-				Send 1wer2q3qe4q
+				Send 4w1wer2q3w
 
 				Sleep, % long_delay
 				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)		
-				attackTurns = attackTurns + 1
+			}
+			
+			else if(ArrayContains(SpecialTurns, attackTurns))
+			{
+				updateLog("Special turn action")
+
+				Sleep, % default_button_delay
+				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)			
+			}
+			
+			else
+			{
+				updateLog("Non-special turn action")
+				
+				Send 4w1wer2q3w
+
+				Sleep, % default_button_delay
+				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)	
+			}
+			attackTurns += 1 
+			globalTimeout := 0
 		}
 		else
 		{
 			updateLog("Battle action not taken, battle non action count = " . battleNonActions)
 			if (battleNonActions >= maxBattleNonActions)
 			{
-				updateLog("Battle non action count exceeded, clicking Next button")
+				;updateLog("Battle non action count exceeded, clicking Next button")
 				battleNonActions := 0
 
 				;RandomClick(next_button_X, next_button_Y, clickVariance)
 			}
 			else
 			{
-				battleNonActions := battleNonActions + 1
+				battleNonActions += 1 
 			}
 		}
 		continue
@@ -91,11 +109,11 @@ If (sURL != "")
 	else if InStr(sURL, searchResults)
 	{
 		updateLog("-----In Results Screen-----")
-		attackTurns := 0
+		attackTurns := 1
 		globalTimeout := 0
 		battleNonActions := 0
 		
-		battleCount := battleCount + 1
+		battleCount += 1
 		updateLog("Battle count: " . battleCount)
 		if(battleCount >= maxBattles)
 		{
@@ -106,13 +124,13 @@ If (sURL != "")
 				ExitApp
 		}
 		
-		resultScreenCycles := resultScreenCycles + 1
+		resultScreenCycles += 1
 		
 		updateLog("Results Screen cycles: " . resultScreenCycles)		
 		if(resultScreenCycles >= waitResultMax)
 		{
 			resultsScreenCycles := 0
-			updateLog("Going to GW battle")
+			updateLog("Going to quest summon select")
 			GoToPage(repeatQuestURL)
 		}
 		continue
@@ -121,29 +139,33 @@ If (sURL != "")
 	else if InStr(sURL, searchCoopJoin)
 	{
 		updateLog("-----In Coop Join-----")
-
+		updateLog("Going to quest summon select")
+		GoToPage(repeatQuestURL)
 	}
 	else if InStr(sURL, searchCoopRoom)
 	{
 		updateLog("-----In Coop Room-----")
-	
+		updateLog("Going to quest summon select")
+		GoToPage(repeatQuestURL)
 	}
 	else if InStr(sURL, searchCoop)
 	{
 		updateLog("-----In Coop Home-----")
+		updateLog("Going to quest summon select")
+		GoToPage(repeatQuestURL)		
 	}
 	else if InStr(sURL, searchSelectSummon)
 	{
 		updateLog("-----In Select Summon-----")
 		
-		selectSummonAutoSelect := [select_party_auto_select, select_party_auto_select_2, special_members, wind_icon, wind_icon_selected]
+		selectSummonAutoSelect := [select_party_auto_select, select_party_auto_select_2, special_members, fav_icon, fav_icon_selected]
 		searchResult := multiImageSearch(coordX, coordY, selectSummonAutoSelect)
 		
-		if InStr(searchResult, select_party_auto_select)
+		if (InStr(searchResult, select_party_auto_select) or InStr(searchResult, select_party_auto_select_2))
 		{
 			updateLog("Party Confirm detected, clicking OK button")
 			
-			RandomClick(coordX + 197, coordY + 201, clickVariance) 
+			RandomClick(select_summon_ok_X, select_summon_ok_Y, clickVariance) 
 			continue
 		}
 		else if InStr(searchResult, special_members)
@@ -151,12 +173,12 @@ If (sURL != "")
 			updateLog("Special Member dialog found, clicking OK button")
 			RandomClick(select_summon_ok_X, select_summon_ok_Y, clickVariance)
 		}
-		else if InStr(searchResult, wind_icon)
+		else if InStr(searchResult, fav_icon)
 		{
 			updateLog("Clicking on summon icon")
-			RandomClick(wind_summon_X, wind_summon_Y, clickVariance)
+			RandomClick(fav_summon_X, fav_summon_Y, clickVariance)
 		}
-		else if InStr(searchResult, wind_icon_selected)
+		else if InStr(searchResult, fav_icon_selected)
 		{
 			updateLog("Please select a summon")
 			RandomClick(first_summon_X, first_summon_Y+40, clickVariance) 
@@ -166,20 +188,20 @@ If (sURL != "")
 	else if InStr(sURL, searchQuest)
 	{
 		updateLog("-----In Quests Screen-----")
-		updateLog("Going to quest")
+		updateLog("Going to quest summon select")
 		GoToPage(repeatQuestURL)
 	}	
 	else if InStr(sURL, searchMypage)
 	{
 		updateLog("-----In Home Page-----")
-		updateLog("Going to GW battle")
+		updateLog("Going to quest summon select")
 		GoToPage(repeatQuestURL)	
 		continue
 	}
 	else if InStr(sURL, guildWarsURL)
 	{
 		updateLog("-----In GW Page-----")
-		updateLog("Going to GW battle")
+		updateLog("Going to quest summon select")
 		GoToPage(repeatQuestURL)		
 	}
 	else
@@ -204,7 +226,7 @@ Return
 ;----------------------------------------------
 
 F1::
-updateLog("Resizing window to " . GBF_winWidth . " x " . GBF_winHeight)
+updateLog("Resizing favow to " . GBF_winWidth . " x " . GBF_winHeight)
 ResizeWin(GBF_winWidth, GBF_winHeight)
 Return
 

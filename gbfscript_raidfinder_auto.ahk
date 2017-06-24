@@ -7,6 +7,8 @@ global maxBattleNonActions := 2
 global maxBattles := 999
 global maxGlobalTimeout := 10
 
+SpecialTurns := []
+
 Gui, Add, ListView, x6 y6 w400 h500 vLogbox LVS_REPORT, %A_Now%|Activity
  LV_ModifyCol(1, 60)
  GuiControl, -Hdr, Logbox
@@ -17,7 +19,7 @@ Gui, Add, ListView, x6 y6 w400 h500 vLogbox LVS_REPORT, %A_Now%|Activity
 ;----------------------------------------------
 
 global globalTimeout := 0
-global attackTurns := 0
+global attackTurns := 1
 global coopHomeCycles := 0
 global resultScreenCycles := 0
 global battleNonActions := 0
@@ -57,10 +59,12 @@ If (sURL != "")
 	else if InStr(sURL, searchBattle)
 	{
 		updateLog("-----In Battle-----")
+		updateLog("Turn count: " . attackTurns)
 		globalTimeout := 0
+		
 		battleActions := [attack_button, attack_button_2]
 		searchResult := multiImageSearch(coordX, coordY, battleActions)
-		updateLog("Attack turns = " . attackTurns)
+		
 		if(attackTurns >= maxAttackTurns)
 		{
 			updateLog("Max attack turns reached")
@@ -69,30 +73,54 @@ If (sURL != "")
 			attackTurns := 0
 			continue
 		}
-		if InStr(searchResult, attack_button)
+		
+		if (InStr(searchResult, attack_button) or InStr(searchResult, attack_button_2))
 		{
-				updateLog("Start Battle Sequence")
+			updateLog("-----Start Battle Sequence-----")	
+			
+			if(attackTurns <=1)
+			{
+				updateLog("1st turn action")
 				
-				Send 4w1r2q3qw4qe
-				;Send  1r2wqe3qwe4qw
+				Send 1wer2q3qe4q
+
+				Sleep, % long_delay
+				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)		
+			}
+			
+			else if(ArrayContains(SpecialTurns, attackTurns))
+			{
+				updateLog("Special turn action")
+
+				Sleep, % default_button_delay
+				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)			
+			}
+			
+			else
+			{
+				updateLog("Non-special turn action")
 				
+				Send 1r
+
 				Sleep, % default_button_delay
 				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)	
-				attackTurns := attackTurns + 1
+			}
+			attackTurns += 1 
+			globalTimeout := 0
 		}
 		else
 		{
 			updateLog("Battle action not taken, battle non action count = " . battleNonActions)
 			if (battleNonActions >= maxBattleNonActions)
 			{
-				updateLog("Battle non action count exceeded, clicking Next button")
+				;updateLog("Battle non action count exceeded, clicking Next button")
 				battleNonActions := 0
 
 				;RandomClick(next_button_X, next_button_Y, clickVariance)
 			}
 			else
 			{
-				battleNonActions := battleNonActions + 1
+				battleNonActions += 1
 			}
 		}
 		continue
@@ -100,11 +128,11 @@ If (sURL != "")
 	else if InStr(sURL, searchResults)
 	{
 		updateLog("-----In Results Screen-----")
-		attackTurns := 0
+		attackTurns := 1
 		globalTimeout := 0
 		battleNonActions := 0
 		
-		battleCount := battleCount + 1
+		battleCount += 1
 		updateLog("Battle count: " . battleCount)
 		if(battleCount >= maxBattles)
 		{
@@ -115,7 +143,7 @@ If (sURL != "")
 				ExitApp
 		}
 		
-		resultScreenCycles := resultScreenCycles + 1
+		resultScreenCycles += 1
 		
 		updateLog("Results Screen cycles: " . resultScreenCycles)		
 		if(resultScreenCycles >= waitResultMax)
@@ -145,10 +173,10 @@ If (sURL != "")
 	{
 		updateLog("-----In Select Summon-----")
 		
-		selectSummonAutoSelect := [select_party_auto_select, select_party_auto_select_2, special_members, misc_icon, misc_icon_selected]
+		selectSummonAutoSelect := [select_party_auto_select, select_party_auto_select_2, special_members, fav_icon, fav_icon_selected]
 		searchResult := multiImageSearch(coordX, coordY, selectSummonAutoSelect)
 		
-		if InStr(searchResult, select_party_auto_select)
+		if (InStr(searchResult, select_party_auto_select) or InStr(searchResult, select_party_auto_select_2))
 		{
 			updateLog("Party Confirm detected, clicking OK button")
 			RandomClick(coordX + 197, coordY + 201, clickVariance) 
@@ -160,13 +188,13 @@ If (sURL != "")
 			updateLog("Special Member dialog found, clicking OK button")
 			RandomClick(select_summon_ok_X, select_summon_ok_Y, clickVariance)
 		}
-		else if InStr(searchResult, misc_icon)
+		else if InStr(searchResult, fav_icon)
 		{
 			updateLog("Clicking on summon icon")
-			RandomClick(misc_summon_X, misc_summon_Y+40, clickVariance)
+			RandomClick(fav_summon_X, fav_summon_Y+40, clickVariance)
 			globalTimeout := 0
 		}
-		else if InStr(searchResult, misc_icon_selected)
+		else if InStr(searchResult, fav_icon_selected)
 		{
 			updateLog("Clicking on first summon")
 			RandomClick(first_summon_X, first_summon_Y+40, clickVariance) 
