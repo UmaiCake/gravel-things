@@ -1,13 +1,6 @@
 #Include gbfscriptConfigUtilities.ahk
 
-SetTimer, ForceExitApp, 3600000 
-
-global maxAttackTurns := 10
-global maxBattleNonActions := 2
-global maxBattles := 999
-
-SpecialTurns := [2, 3, 4]
-
+SetTimer, ForceExitApp, 7000000 
 
 Gui, Add, ListView, x6 y6 w400 h500 vLogbox LVS_REPORT, %A_Now%|Activity
  LV_ModifyCol(1, 60)
@@ -17,17 +10,21 @@ Gui, Add, ListView, x6 y6 w400 h500 vLogbox LVS_REPORT, %A_Now%|Activity
 ;----------------------------------------------
 ;Main Loop
 ;----------------------------------------------
-
-global globalTimeout := 0
-global attackTurns := 1
-global coopHomeCycles := 0
-global resultScreenCycles := 0
-global battleNonActions := 0
-global battleCount := 0
 global maxBattles := maxBattles * waitResultMax
 
-CoordMode Pixel, Relative
-CoordMode Mouse, Relative
+;EX+
+global repeatQuestURL := "http://game.granbluefantasy.jp/#event/teamraid031/supporter/719461/1"
+SpecialTurns1 := [2]
+
+;NM90
+;global repeatQuestURL := "http://game.granbluefantasy.jp/#event/teamraid031/supporter/719471/1"
+;SpecialTurns1 := [6, 11, 16]
+;SpecialTurns2 := [2, 3, 4, 5, 7, 10]
+
+;SpecialTurns1 := [2]
+;SpecialTurns2 := [3]
+;SpecialTurns3 := [4]
+;SpecialTurns4 := [5]
 
 Loop{
 Sleep, % default_interval	
@@ -40,7 +37,6 @@ WinGetClass, sClass, A
 If (sURL != "")
 {
 	;updateLog("The URL is : " . sURL)
-
 	if InStr(sURL, searchStage)
 	{
 		updateLog("-----In Stage-----")
@@ -63,25 +59,78 @@ If (sURL != "")
 			{
 				updateLog("1st turn action")
 				
-				Send 4w1wer2q3w
+				;EX+
+				Send 4eq3ew2e1we3q4w
+				
+				;NM90
+				;Send 4eq3ew2w1qerw3q2qe4w
+				
+				;NM90 ST
+				;Send 4e1w2q
 
 				Sleep, % long_delay
 				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)		
 			}
 			
-			else if(ArrayContains(SpecialTurns, attackTurns))
+			else if(ArrayContains(SpecialTurns1, attackTurns))
 			{
-				updateLog("Special turn action")
+				updateLog("Special group 1 action")
+				
+				;EX+
+				Send 2w1r
+				
+				;NM90
+				;Send 1qwer2qwe3qwe4qwe
+				
+				;NM90 ST
+				;Send 2w3q
 
 				Sleep, % default_button_delay
 				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)			
 			}
 			
+			else if(ArrayContains(SpecialTurns2, attackTurns))
+			{
+				updateLog("Special group 2 action")	
+
+				;NM90 ST
+				;Send 1e2e3e
+
+				Sleep, % default_button_delay
+				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)			
+			}
+			
+			else if(ArrayContains(SpecialTurns3, attackTurns))
+			{
+				updateLog("Special group 3 action")		
+
+				;NM90 ST
+				Send 1qr
+
+				Sleep, % default_button_delay
+				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)			
+			}
+			
+			else if(ArrayContains(SpecialTurns4, attackTurns))
+			{
+				updateLog("Special group 4 action")	
+
+				;NM90 ST
+				Send 4wq3w
+
+				Sleep, % default_button_delay
+				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)			
+			}
+
 			else
 			{
 				updateLog("Non-special turn action")
 				
-				Send 4w1wer2q3w
+				;NM90
+				;Send 1qw2qwe3qwe4qwe
+				
+				;NM90 ST
+				Send 1qwe2qw
 
 				Sleep, % default_button_delay
 				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)	
@@ -180,7 +229,7 @@ If (sURL != "")
 		}
 		else if InStr(searchResult, fav_icon_selected)
 		{
-			updateLog("Please select a summon")
+			updateLog("Clicking first summon")
 			RandomClick(first_summon_X, first_summon_Y+40, clickVariance) 
 		}
 		continue

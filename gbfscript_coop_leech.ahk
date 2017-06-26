@@ -2,10 +2,6 @@
 
 SetTimer, ForceExitApp, 3600000 
 
-global maxAttackTurns := 999
-global maxBattleNonActions := 3
-global maxGlobalTimeout := 6
-
 Gui, Add, ListView, x6 y6 w400 h500 vLogbox LVS_REPORT, %A_Now%|Activity
  LV_ModifyCol(1, 60)
  GuiControl, -Hdr, Logbox
@@ -14,17 +10,8 @@ Gui, Add, ListView, x6 y6 w400 h500 vLogbox LVS_REPORT, %A_Now%|Activity
 ;----------------------------------------------
 ;Main Loop
 ;----------------------------------------------
-
-global globalTimeout := 0
-global attackTurns := 1
-global coopHomeCycles := 0
-global resultScreenCycles := 0
-global battleNonActions := 0
-
-global waitResultMax := 3
-
-CoordMode Pixel, Relative
-CoordMode Mouse, Relative
+global maxGlobalTimeout := 7
+global maxBattles := maxBattles * waitResultMax
 
 Loop{
 Sleep, % default_interval	

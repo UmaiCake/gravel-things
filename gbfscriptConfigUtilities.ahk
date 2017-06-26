@@ -2,6 +2,21 @@
 ;Global Config
 ;----------------------------------------------
 
+;Configs
+global roomJoinClicks := 5
+global clickVariance := 20
+global clickVarianceSmall := 6
+
+global waitImageTimeoutMax := 10
+global waitCoopHomeMax := 7
+global waitResultMax := 3
+global maxGlobalTimeout := 999
+
+global maxAttackTurns := 10
+global maxBattleNonActions := 2
+global maxBattles := 999
+global maxBattles := maxBattles * waitResultMax
+
 ;Coordinates
 global coop_refresh_X := 120
 global coop_refresh_Y := 575
@@ -43,7 +58,7 @@ global select_party_button_X := 370
 global select_party_button_Y := 1020
 
 global select_summon_ok_X := 515
-global select_summon_ok_Y := 915
+global select_summon_ok_Y := 900
 
 global first_favorite_X := 368
 global first_favorite_Y := 760
@@ -129,7 +144,7 @@ global coopHomeURL := "http://game.granbluefantasy.jp/#coopraid"
 global coopJoinURL := "http://game.granbluefantasy.jp/#coopraid/offer"
 global questURL := "http://game.granbluefantasy.jp/#quest"
 global guildWarsURL := "http://game.granbluefantasy.jp/#event/teamraid030"
-global repeatQuestURL := "http://game.granbluefantasy.jp/#quest/supporter/719281/5"
+global repeatQuestURL := "http://game.granbluefantasy.jp/#event/teamraid031/supporter/719471/1"
 global rabbitURL:= "http://game.granbluefantasy.jp/#quest/supporter/713431/0"
 global pendingURL := "http://game.granbluefantasy.jp/#quest/assist/unclaimed"
 
@@ -227,16 +242,17 @@ global default_interval := 1000
 global medium_interval := 3000
 global globalTimeoutMax := 1000
 
-;Configs
-global roomJoinClicks := 5
-global clickVariance := 20
-global clickVarianceSmall := 6
-global waitImageTimeoutMax := 10
-global waitCoopHomeMax := 7
-global waitResultMax := 3
-global cardSearchLoops := 10
-
+;Intialization
+global globalTimeout := 0
+global attackTurns := 1
+global coopHomeCycles := 0
+global resultScreenCycles := 0
+global battleNonActions := 0
+global battleCount := 0
 SetKeyDelay, 100
+CoordMode Pixel, Relative
+CoordMode Mouse, Relative
+
 
 ;----------------------------------------------
 ;ImageSearch wrappers
