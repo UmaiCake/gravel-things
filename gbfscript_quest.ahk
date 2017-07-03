@@ -1,6 +1,6 @@
 #Include gbfscriptConfigUtilities.ahk
 
-SetTimer, ForceExitApp, 7000000 
+SetTimer, ForceExitApp, 10000000 
 
 Gui, Add, ListView, x6 y6 w400 h500 vLogbox LVS_REPORT, %A_Now%|Activity
  LV_ModifyCol(1, 60)

@@ -13,8 +13,8 @@ Return
 ;SR hards
 +F2::
 SetKeyDelay, 100
-;Send 4wq1wer2wqe3wq
-Send 4w1wer2q3w
+Send 2ew3w2e3q1wer3e4wq
+;Send 4w1wer2q3w
 Return
 
 ;SR leech
@@ -40,23 +40,9 @@ Return
 SetKeyDelay, 100
 Send 4q3qwe1rqwe4w2q
 
-;Dirt
+;Earth
 +F6::
 SetKeyDelay, 100
-Send 4q3w2e1rqwe2qw3q
-
-;fen60
-;Send 4wqe1wer2q3qw1q
-
-;genbu
-;Send 4e3eq2e1rqwe4w2qw3w
-;Send 4e3q1rqwe4w2qw
-
-;byakko
-;Send 1r4w1we4qe1q2q3qw
-;Send 4w1we4qe1q2q3qw
-
-;suzaku
-;Send 4q3qwe1rqwe4w2q
+Send 3w2e1rqwe2qw3q
 
 Return

@@ -150,6 +150,8 @@ global pendingURL := "http://game.granbluefantasy.jp/#quest/assist/unclaimed"
 
 global GBF_winHeight := 1080
 global GBF_winWidth := 700
+global coordinateMultiplier := 1
+
 
 
 ;----------Search Images------------;
@@ -180,22 +182,22 @@ global special_members := "special_members.png"
 global retreat_ok := "retreat_ok.png"
 
 global select_support := "select_support.png"
-global select_support_2 := "2_select_support.png"
+global select_support_2 := "select_support_2.png"
 
 global ready_start := "ready_to_start.png"
-global ready_start_2 := "2_ready_to_start.png"
+global ready_start_2 := "ready_to_start_2.png"
 
 global wait_quest_start := "wait_quest_start.png"
-global wait_quest_start_2 := "2_wait_quest_start.png"
+global wait_quest_start_2 := "wait_quest_start_2.png"
 
 global coopjoin_refresh := "coopjoin_refresh.png"
-global coopjoin_refresh_2 := "2_coopjoin_refresh.png"
+global coopjoin_refresh_2 := "coopjoin_refresh_2.png"
 
 global coopjoin_room := "coopjoin_room.png"
-global coopjoin_room_2 := "2_coopjoin_room.png"
+global coopjoin_room_2 := "coopjoin_room_2.png"
 
 global coopjoin_join_header := "coopjoin_join.png"
-global coopjoin_join_header_2 := "2_coopjoin_join.png"
+global coopjoin_join_header_2 := "coopjoin_join_2.png"
 
 global last_hosted := "last_hosted.png"
 
@@ -437,20 +439,20 @@ ResizeWin(Width = 0,Height = 0)
 
 GoToPage(pageURL)
 {
-coopHomeCycles := 0
-resultScreenCycles := 0	
-battleNonActions := 0
-	
-Sleep, default_interval
-Send, ^l 
-Sleep, 100
-Clipboard := pageURL
-Sleep, 100
-Send, ^v
-Sleep, 100
-Send, {ENTER}
-Sleep, default_interval
-Return
+	coopHomeCycles := 0
+	resultScreenCycles := 0	
+	battleNonActions := 0
+		
+	Sleep, default_interval
+	Send, ^l 
+	Sleep, 100
+	Clipboard := pageURL
+	Sleep, 100
+	Send, ^v
+	Sleep, 100
+	Send, {ENTER}
+	Sleep, default_interval
+	Return
 }
 
 RandomClick(coordX, coordY, variance)
@@ -459,8 +461,11 @@ RandomClick(coordX, coordY, variance)
 	Random, randY, 0 - variance, variance
 	
 	;updateLog("Random coordinate modifiers: " . randX . ", " . randY)
+	clickX := (coordX + randX) * coordinateMultiplier
+	clickY := (coordY + randY) * coordinateMultiplier
 	
-	MouseMove coordX + randX, coordY + randY
+	updateLog("Clicking coordinates: " . clickX . ", " . clickY)
+	MouseMove clickX, clickY
 	Click
 }
 
@@ -469,9 +474,12 @@ RandomClickWide(coordX, coordY, variance)
 	Random, randX, 0 - (variance*2), (variance*2)
 	Random, randY, 0 - variance, variance
 	
-	;updateLog("Random coordinate modifiers: " . randX . ", " . randY)
+	;updateLog("Random coordinate modifiers: " . randX . ", " . randY)	
+	clickX := (coordX + randX) * coordinateMultiplier
+	clickY := (coordY + randY) * coordinateMultiplier
 	
-	MouseMove coordX + randX, coordY + randY
+	updateLog("Clicking coordinates: " . clickX . ", " . clickY)
+	MouseMove clickX, clickY
 	Click
 }
 
