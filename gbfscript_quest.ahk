@@ -12,15 +12,10 @@ Gui, Add, ListView, x6 y6 w400 h500 vLogbox LVS_REPORT, %A_Now%|Activity
 ;----------------------------------------------
 global maxBattles := maxBattles * waitResultMax
 
-;EX+
-global repeatQuestURL := "http://game.granbluefantasy.jp/#event/teamraid031/supporter/719461/1"
+
+global repeatQuestURL := "http://game.granbluefantasy.jp/#quest/supporter/719601/1/0/10226"
 SpecialTurns1 := [2]
-
-;NM90
-;global repeatQuestURL := "http://game.granbluefantasy.jp/#event/teamraid031/supporter/719471/1"
-;SpecialTurns1 := [6, 11, 16]
-;SpecialTurns2 := [2, 3, 4, 5, 7, 10]
-
+SpecialTurns2 := [3]
 ;SpecialTurns1 := [2]
 ;SpecialTurns2 := [3]
 ;SpecialTurns3 := [4]
@@ -59,31 +54,17 @@ If (sURL != "")
 			{
 				updateLog("1st turn action")
 				
-				;EX+
-				Send 4eq3ew2e1we3q4w
+				Send 1rwe
 				
-				;NM90
-				;Send 4eq3ew2w1qerw3q2qe4w
-				
-				;NM90 ST
-				;Send 4e1w2q
-
 				Sleep, % long_delay
 				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)		
 			}
 			
 			else if(ArrayContains(SpecialTurns1, attackTurns))
 			{
-				updateLog("Special group 1 action")
-				
-				;EX+
-				Send 2w1r
-				
-				;NM90
-				;Send 1qwer2qwe3qwe4qwe
-				
-				;NM90 ST
-				;Send 2w3q
+				updateLog("Special group 1 action")		
+
+				Send 2e3e
 
 				Sleep, % default_button_delay
 				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)			
@@ -92,9 +73,8 @@ If (sURL != "")
 			else if(ArrayContains(SpecialTurns2, attackTurns))
 			{
 				updateLog("Special group 2 action")	
-
-				;NM90 ST
-				;Send 1e2e3e
+				
+				Send 1q
 
 				Sleep, % default_button_delay
 				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)			
@@ -104,9 +84,6 @@ If (sURL != "")
 			{
 				updateLog("Special group 3 action")		
 
-				;NM90 ST
-				Send 1qr
-
 				Sleep, % default_button_delay
 				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)			
 			}
@@ -115,9 +92,6 @@ If (sURL != "")
 			{
 				updateLog("Special group 4 action")	
 
-				;NM90 ST
-				Send 4wq3w
-
 				Sleep, % default_button_delay
 				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)			
 			}
@@ -125,12 +99,6 @@ If (sURL != "")
 			else
 			{
 				updateLog("Non-special turn action")
-				
-				;NM90
-				;Send 1qw2qwe3qwe4qwe
-				
-				;NM90 ST
-				Send 1qwe2qw
 
 				Sleep, % default_button_delay
 				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)	

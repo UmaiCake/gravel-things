@@ -43,6 +43,6 @@ Send 4q3qwe1rqwe4w2q
 ;Earth
 +F6::
 SetKeyDelay, 100
-Send 3w2e1rqwe2qw3q
+Send 3e2e1rqwe3qw4q
 
 Return
