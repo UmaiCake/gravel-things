@@ -1,6 +1,6 @@
 #Include gbfscriptConfigUtilities.ahk
 
-SetTimer, ForceExitApp, 5000000
+SetTimer, ForceExitApp, 20000000
 
 Gui, Add, ListView, x6 y6 w400 h500 vLogbox LVS_REPORT, %A_Now%|Activity
  LV_ModifyCol(1, 60)
@@ -10,8 +10,10 @@ Gui, Add, ListView, x6 y6 w400 h500 vLogbox LVS_REPORT, %A_Now%|Activity
 ;----------------------------------------------
 ;Main Loop
 ;----------------------------------------------
-global maxAttackTurns := 4
+global maxAttackTurns := 2
 global maxBattles := maxBattles * waitResultMax
+global attackTurns := 1
+global maxGlobalTimeout := 30
 
 Loop{
 Sleep, % default_interval	
@@ -62,11 +64,11 @@ If (sURL != "")
 		{
 			updateLog("-----Start Battle Sequence-----")	
 			
-			if(attackTurns <=1)
+			if(attackTurns <1)
 			{
 				updateLog("1st turn action")
 				
-				Send 1wer2q3qe4q
+				Send 1wer2wqe3qwe4qw
 
 				Sleep, % long_delay
 				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)		
@@ -84,9 +86,6 @@ If (sURL != "")
 			{
 				updateLog("Non-special turn action")
 				
-				Send 1r
-
-				Sleep, % default_button_delay
 				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)	
 			}
 			attackTurns += 1 
@@ -157,7 +156,7 @@ If (sURL != "")
 	{
 		updateLog("-----In Select Summon-----")
 		
-		selectSummonAutoSelect := [select_party_auto_select, select_party_auto_select_2, special_members, fav_icon, fav_icon_selected]
+		selectSummonAutoSelect := [select_party_auto_select, select_party_auto_select_2, special_members, fav_icon, fav_icon_selected, raids]
 		searchResult := multiImageSearch(coordX, coordY, selectSummonAutoSelect)
 		
 		if (InStr(searchResult, select_party_auto_select) or InStr(searchResult, select_party_auto_select_2))
@@ -184,6 +183,12 @@ If (sURL != "")
 			RandomClick(first_summon_X, first_summon_Y+40, clickVariance) 
 			globalTimeout := 0
 		}
+		else if InStr(searchResult, raids)
+		{
+			updateLog("Raids dialog found, returning to pending")
+			GoToPage(pendingURL)
+			globalTimeout := 0
+		}
 		continue
 	}
 	else if InStr(sURL, searchPending)
@@ -193,22 +198,26 @@ If (sURL != "")
 		;Send  {Space}
 		Sleep, % default_interval		
 		
-		pendingActions := [vmate_join, vmate_refill, vmate_ok, ok_button]
+		pendingActions := [3raids, vmate_join, vmate_refill, vmate_ok, ok_button]
 		searchResult := multiImageSearch(coordX, coordY, pendingActions)
 		
-		if InStr(searchResult, vmate_join)
+		if InStr(searchResult, 3raids)
+		{
+			updateLog("Raids dialog found, sleeping for a while")
+			Sleep, 20000
+			GoToPage(pendingURL)
+		}
+		else if InStr(searchResult, vmate_join)
 		{
 			updateLog("VMate join raid button found, clicking")
 			RandomClick(vmate_joinraid_X, vmate_joinraid_Y, clickVarianceSmall)
 			Sleep, % default_interval
-			globalTimeout := 0
 		}
 		else if InStr(searchResult, vmate_refill)
 		{
 			updateLog("VMate refill button found, clicking")
 			RandomClick(vmate_refill_X, vmate_refill_Y, clickVarianceSmall)
 			Sleep, % medium_interval
-			globalTimeout := 0
 		}
 		else if InStr(searchResult, vmate_ok)
 		{

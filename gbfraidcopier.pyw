@@ -22,32 +22,32 @@ sndOn = [0]*raidCount
 names = [
     "Huanglong",
     "Qilin",
-    "Dark Angel Olivia",
-    "Athena",
-    "Twin Elements",
+    "Ultimate Bahamut",
     "Proto Bahamut",
     "The Grand Order",
-    "Chevalier HL"
+    "Chevalier HL",
+    "Baal",
+    "Yggdrasil Omega"
     ]
 enSearchStrings = [
     u"Lvl 100 Huanglong",
     u"Lvl 100 Qilin",
-    u"Lvl 100 Dark Agnel Olivia",
-    u"Lvl 100 Athena",
-    u"Lvl 100 Twin Elements",
+    u"Lvl 150 Ultimate Bahamu",
     u"Lvl 100 Proto Bahamut",
     u"Lvl 100 The Grand Order",
-    u"Lvl 100 Chevalier Omega"
+    u"Lvl 100 Chevalier Omega",
+    u"Lvl 100 Baal",
+    u"Lvl 100 Yggdrasil Omega"
     ]
 jpSearchStrings = [
     u"Lv100 黄龍",
     u"Lv100 黒麒麟",
-    u"Lv100 Dエンジェル・オリヴィエ",
-    u"Lv100 アテナ",
-    u"Lv100 フラム＝グラス",
+    u"Lv150 アルティメットバハムート",
     u"Lv100 プロトバハムート",
     u"Lv100 ジ・オーダー・グランデ",
-    u"Lv100 シュヴァリエ・マグナ"
+    u"Lv100 シュヴァリエ・マグナ",
+    u"Lv100 バアル",
+    u"Lv100 ユグドラシル・マグナ"
     ]
 logtext = {}
 idregex = re.compile(u'ID(?:：|\: )([A-Z0-9]{8})')
