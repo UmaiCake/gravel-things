@@ -49,7 +49,7 @@ global battle_end_X := 375
 global battle_end_Y := 415
 
 global first_summon_X := 160
-global first_summon_Y := 500
+global first_summon_Y := 520
 
 global ready_button_X := 590
 global ready_button_Y := 856
