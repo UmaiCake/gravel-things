@@ -13,7 +13,7 @@ Gui, Add, ListView, x6 y6 w400 h500 vLogbox LVS_REPORT, %A_Now%|Activity
 global maxBattles := maxBattles * waitResultMax
 
 
-global repeatQuestURL := "http://game.granbluefantasy.jp/#quest/supporter/719981/3"
+global repeatQuestURL := "http://game.granbluefantasy.jp/#quest/supporter/719601/1/0/10226"
 SpecialTurns1 := [2]
 SpecialTurns2 := [3]
 ;SpecialTurns1 := [2]
@@ -54,7 +54,7 @@ If (sURL != "")
 			{
 				updateLog("1st turn action")
 				
-				Send 4w1wer2q3w
+				Send 1rwe
 				
 				Sleep, % long_delay
 				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)		

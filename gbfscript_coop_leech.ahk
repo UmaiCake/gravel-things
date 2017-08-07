@@ -10,7 +10,7 @@ Gui, Add, ListView, x6 y6 w400 h500 vLogbox LVS_REPORT, %A_Now%|Activity
 ;----------------------------------------------
 ;Main Loop
 ;----------------------------------------------
-global maxGlobalTimeout := 14
+global maxGlobalTimeout := 7
 global maxBattles := maxBattles * waitResultMax
 
 Loop{

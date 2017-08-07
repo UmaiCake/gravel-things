@@ -34,7 +34,7 @@ global vmate_refill_X := 120
 global vmate_refill_Y := 140
 
 global vmate_ok_X := 150
-global vmate_ok_Y := 530
+global vmate_ok_Y := 500
 
 global last_hosted_X := 580
 global last_hosted_Y := 760
@@ -48,8 +48,8 @@ global join_confirm_Y := 820
 global battle_end_X := 375
 global battle_end_Y := 415
 
-global first_summon_X := 160
-global first_summon_Y := 500
+global first_summon_X := 180
+global first_summon_Y := 570
 
 global ready_button_X := 590
 global ready_button_Y := 856
@@ -232,10 +232,6 @@ global vmate_ok := "vmate_ok.png"
 
 global ok_button := "ok_button.png"
 
-global raids := "raids_title.png"
-
-global 3raids := "3raids.png"
-
 ;Time intervals
 global default_button_delay := 500
 global long_delay := 5000
@@ -244,7 +240,7 @@ global post_attack_button_delay := 5000
 
 global kill_time := 10000
 global short_interval := 500
-global default_interval := 500
+global default_interval := 1000
 global medium_interval := 3000
 global globalTimeoutMax := 1000
 
