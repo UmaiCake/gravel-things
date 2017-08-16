@@ -10,6 +10,7 @@ Gui, Add, ListView, x6 y6 w400 h500 vLogbox LVS_REPORT, %A_Now%|Activity
 ;----------------------------------------------
 
 minutesTilKill := 180
+first_summon_Y := 520
 default_interval := 500
 maxGlobalTimeout := 30
 maxAttackTurns := 3
