@@ -1,19 +1,49 @@
 #Include gbfscriptConfigUtilities.ahk
 
-SetTimer, ForceExitApp, 20000000
-
 Gui, Add, ListView, x6 y6 w400 h500 vLogbox LVS_REPORT, %A_Now%|Activity
  LV_ModifyCol(1, 60)
  GuiControl, -Hdr, Logbox
  Gui, Show, w410 h505, GBF Bot Log
+ 
+;----------------------------------------------
+;Configs
+;----------------------------------------------
+
+minutesTilKill := 180
+default_interval := 500
+maxGlobalTimeout := 30
+maxAttackTurns := 3
+
+;----------------------------------------------
+;Battle Sequence
+;----------------------------------------------
+BattleSequence1(attackTurns)
+{	
+	if(attackTurns <=1)
+	{
+		updateLog("1st turn action")
+
+		Send 4wq1r2q3qw
+		
+		Sleep, % long_delay
+		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)		
+	}
+	
+	else
+	{
+		updateLog("Non-special turn action")
+
+		Sleep, % default_button_delay
+		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)	
+	}
+}
 
 ;----------------------------------------------
 ;Main Loop
 ;----------------------------------------------
-global maxAttackTurns := 2
 global maxBattles := maxBattles * waitResultMax
-global attackTurns := 1
-global maxGlobalTimeout := 30
+killTime := 600000 * minutesTilKill
+SetTimer, ForceExitApp, %killTime%
 
 Loop{
 Sleep, % default_interval	
@@ -25,7 +55,6 @@ sURL := GetActiveChromeURL()
 WinGetClass, sClass, A
 If (sURL != "")
 {
-	;updateLog("The URL is : " . sURL)
 	If (globalTimeout >= maxGlobalTimeout)
 	{
 		updateLog("Max Timeout Exceeded")
@@ -56,7 +85,7 @@ If (sURL != "")
 			updateLog("Max attack turns reached")
 			updateLog("Going to Pending page")
 			GoToPage(pendingURL)
-			attackTurns := 0
+			attackTurns := 1
 			continue
 		}
 		
@@ -64,30 +93,8 @@ If (sURL != "")
 		{
 			updateLog("-----Start Battle Sequence-----")	
 			
-			if(attackTurns <1)
-			{
-				updateLog("1st turn action")
-				
-				Send 1wer2wqe3qwe4qw
-
-				Sleep, % long_delay
-				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)		
-			}
+			battleSequence1(attackTurns)
 			
-			else if(ArrayContains(SpecialTurns, attackTurns))
-			{
-				updateLog("Special turn action")
-
-				Sleep, % default_button_delay
-				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)			
-			}
-			
-			else
-			{
-				updateLog("Non-special turn action")
-				
-				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)	
-			}
 			attackTurns += 1 
 			globalTimeout := 0
 		}

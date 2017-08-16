@@ -26,7 +26,7 @@ Return
 ;Fire
 +F3::
 SetKeyDelay, 100
-Send 4e1rqwe2qw3qe4q
+Send 2r1rqwe2qw3qe4qe
 Return
 
 ;Wind
@@ -44,5 +44,5 @@ Return
 ;Earth
 +F6::
 SetKeyDelay, 100
-Send 3e2e1rqwe3qw4q
+Send 2e3e4w1rqwe4q3qw
 Return

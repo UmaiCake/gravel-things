@@ -13,7 +13,7 @@ global waitResultMax := 3
 global maxGlobalTimeout := 999
 
 global maxAttackTurns := 10
-global maxBattleNonActions := 2
+global maxBattleNonActions := 20
 global maxBattles := 999
 global maxBattles := maxBattles * waitResultMax
 
@@ -49,7 +49,7 @@ global battle_end_X := 375
 global battle_end_Y := 415
 
 global first_summon_X := 160
-global first_summon_Y := 520
+global first_summon_Y := 485
 
 global ready_button_X := 590
 global ready_button_Y := 856
@@ -244,7 +244,7 @@ global post_attack_button_delay := 5000
 
 global kill_time := 10000
 global short_interval := 500
-global default_interval := 500
+global default_interval := 1000
 global medium_interval := 3000
 global globalTimeoutMax := 1000
 

@@ -1,16 +1,34 @@
 #Include gbfscriptConfigUtilities.ahk
 
-SetTimer, ForceExitApp, 3600000 
-
 Gui, Add, ListView, x6 y6 w400 h500 vLogbox LVS_REPORT, %A_Now%|Activity
  LV_ModifyCol(1, 60)
  GuiControl, -Hdr, Logbox
  Gui, Show, w410 h505, GBF Bot Log
+ 
+;----------------------------------------------
+;Configs
+;----------------------------------------------
+
+minutesTilKill := 180
+
+;----------------------------------------------
+;Battle Sequence
+;----------------------------------------------
+BattleSequence1(attackTurns)
+{
+	Send 1r
+
+	Sleep, % default_button_delay
+	RandomClickWide(attack_button_X, attack_button_Y, clickVariance)		
+}
+
 
 ;----------------------------------------------
 ;Main Loop
 ;----------------------------------------------
 global maxBattles := maxBattles * waitResultMax
+killTime := 600000 * minutesTilKill
+SetTimer, ForceExitApp, %killTime%
 
 Loop{
 Sleep, % default_interval	
@@ -22,8 +40,6 @@ sURL := GetActiveChromeURL()
 WinGetClass, sClass, A
 If (sURL != "")
 {
-	;updateLog("The URL is : " . sURL)
-
 	if InStr(sURL, searchStage)
 	{
 		updateLog("-----In Stage-----")
@@ -42,12 +58,10 @@ If (sURL != "")
 
 		if(InStr(searchResult, attack_button) or InStr(searchResult, attack_button_2))
 		{
-				updateLog("-----Start Battle Sequence-----")
-				
-				Send 1r
-				
-				Sleep, % default_button_delay
-				RandomClickWide(attack_button_X, attack_button_Y, clickVariance)			
+			battleSequence1(attackTurns)
+			
+			attackTurns += 1 
+			globalTimeout := 0			
 		}
 		else
 		{
