@@ -20,13 +20,13 @@ Return
 ;SR leech
 ^F2::
 SetKeyDelay, 100
-Send 1wer2wqe3qwe4qw
+Send 2w3wqe1r4qw
 Return
 
 ;Fire
 +F3::
 SetKeyDelay, 100
-Send 2r1rqwe2qw3qe4qe
+Send 1rq2r3e1we2qw4qe3qw
 Return
 
 ;Wind

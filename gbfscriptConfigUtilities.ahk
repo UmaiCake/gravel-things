@@ -48,8 +48,8 @@ global join_confirm_Y := 820
 global battle_end_X := 375
 global battle_end_Y := 415
 
-global first_summon_X := 160
-global first_summon_Y := 485
+global first_summon_X := 145
+global first_summon_Y := 490
 
 global ready_button_X := 590
 global ready_button_Y := 856
@@ -139,14 +139,16 @@ global searchResults := "result"
 global searchScene := "scene"
 global searchGuildWars := "teamraid"
 global searchPending := "unclaimed"
+global searchEvent := "#quest/extra/event"
 
 global coopHomeURL := "http://game.granbluefantasy.jp/#coopraid"
 global coopJoinURL := "http://game.granbluefantasy.jp/#coopraid/offer"
 global questURL := "http://game.granbluefantasy.jp/#quest"
-global guildWarsURL := "http://game.granbluefantasy.jp/#event/teamraid031"
+global guildWarsURL := "http://game.granbluefantasy.jp/#event/teamraid032"
 global repeatQuestURL := "http://game.granbluefantasy.jp/#event/teamraid031/supporter/719471/1"
 global rabbitURL:= "http://game.granbluefantasy.jp/#quest/supporter/713431/0"
 global pendingURL := "http://game.granbluefantasy.jp/#quest/assist/unclaimed"
+global eventURL := "http://game.granbluefantasy.jp/#quest/extra/event/2017"
 
 global GBF_winHeight := 1080
 global GBF_winWidth := 700

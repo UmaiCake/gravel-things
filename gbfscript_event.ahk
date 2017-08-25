@@ -4,31 +4,37 @@ Gui, Add, ListView, x6 y6 w400 h500 vLogbox LVS_REPORT, %A_Now%|Activity
  LV_ModifyCol(1, 60)
  GuiControl, -Hdr, Logbox
  Gui, Show, w410 h505, GBF Bot Log
- 
+
 ;----------------------------------------------
 ;Configs
 ;----------------------------------------------
 
-minutesTilKill := 120
-first_summon_Y := 520
-default_interval := 500
-maxGlobalTimeout := 30
-maxAttackTurns := 3
+global minutesTilKill := 120
+repeatQuestURL := "http://game.granbluefantasy.jp/#quest/supporter/501141/5"
 
 ;----------------------------------------------
 ;Battle Sequence
 ;----------------------------------------------
 BattleSequence1(attackTurns)
-{	
+{
+	SpecialTurns1 := [6]
+	
 	if(attackTurns <=1)
 	{
 		updateLog("1st turn action")
 
-		Send 4wq1r2q3qw
-		
-		Sleep, % long_delay
 		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)		
 	}
+	
+	else if(ArrayContains(SpecialTurns1, attackTurns))
+	{
+		updateLog("Special group 1 action")		
+
+		Send 1q2r3e1we4qew2qw3q
+
+		Sleep, % default_button_delay
+		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)	
+	}	
 	
 	else
 	{
@@ -37,6 +43,7 @@ BattleSequence1(attackTurns)
 		Sleep, % default_button_delay
 		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)	
 	}
+
 }
 
 ;----------------------------------------------
@@ -55,44 +62,24 @@ updateLog("Timeout: " . globalTimeout)
 sURL := GetActiveChromeURL()
 WinGetClass, sClass, A
 If (sURL != "")
-{
-	If (globalTimeout >= maxGlobalTimeout)
-	{
-		updateLog("Max Timeout Exceeded")
-		updateLog("Going to Pending page")
-		GoToPage(pendingURL)
-		globalTimeout := 0
-	}
-		
-	else if InStr(sURL, searchStage)
+{	
+	if InStr(sURL, searchStage)
 	{
 		updateLog("-----In Stage-----")
-		updateLog("Going to Pending page")
-		GoToPage(pendingURL)
-		continue
-
+		updateLog("Going to Quest page")
+		GoToPage(questURL)
 	}
-	else if InStr(sURL, searchBattle)
+	if InStr(sURL, searchBattle)
 	{
 		updateLog("-----In Battle-----")
 		updateLog("Turn count: " . attackTurns)
-		globalTimeout := 0
 		
 		battleActions := [attack_button, attack_button_2]
-		searchResult := multiImageSearch(coordX, coordY, battleActions)
-		
-		if(attackTurns >= maxAttackTurns)
-		{
-			updateLog("Max attack turns reached")
-			updateLog("Going to Pending page")
-			GoToPage(pendingURL)
-			attackTurns := 1
-			continue
-		}
-		
+		searchResult := multiImageSearch(coordX, coordY, battleActions)		
+
 		if (InStr(searchResult, attack_button) or InStr(searchResult, attack_button_2))
 		{
-			updateLog("-----Start Battle Sequence-----")	
+			updateLog("-----Start Battle Sequence-----")			
 			
 			battleSequence1(attackTurns)
 			
@@ -140,8 +127,8 @@ If (sURL != "")
 		if(resultScreenCycles >= waitResultMax)
 		{
 			resultsScreenCycles := 0
-			updateLog("Going to Pending page")
-			GoToPage(pendingURL)
+			updateLog("Going to Quest page")
+			GoToPage(questURL)
 		}
 		continue
 	}
@@ -149,29 +136,33 @@ If (sURL != "")
 	else if InStr(sURL, searchCoopJoin)
 	{
 		updateLog("-----In Coop Join-----")
-
+		updateLog("Going to event page")
+		GoToPage(eventURL)
 	}
 	else if InStr(sURL, searchCoopRoom)
 	{
 		updateLog("-----In Coop Room-----")
-	
+		updateLog("Going to event page")
+		GoToPage(eventURL)
 	}
 	else if InStr(sURL, searchCoop)
 	{
 		updateLog("-----In Coop Home-----")
+		updateLog("Going to event page")
+		GoToPage(eventURL)	
 	}
 	else if InStr(sURL, searchSelectSummon)
 	{
 		updateLog("-----In Select Summon-----")
 		
-		selectSummonAutoSelect := [select_party_auto_select, select_party_auto_select_2, special_members, fav_icon, fav_icon_selected, raids]
+		selectSummonAutoSelect := [select_party_auto_select, select_party_auto_select_2, special_members, fav_icon, fav_icon_selected]
 		searchResult := multiImageSearch(coordX, coordY, selectSummonAutoSelect)
 		
 		if (InStr(searchResult, select_party_auto_select) or InStr(searchResult, select_party_auto_select_2))
 		{
 			updateLog("Party Confirm detected, clicking OK button")
-			RandomClick(coordX + 197, coordY + 201, clickVariance) 
-			globalTimeout := 0
+			
+			RandomClick(select_summon_ok_X, select_summon_ok_Y, clickVariance) 
 			continue
 		}
 		else if InStr(searchResult, special_members)
@@ -182,99 +173,55 @@ If (sURL != "")
 		else if InStr(searchResult, fav_icon)
 		{
 			updateLog("Clicking on summon icon")
-			RandomClick(fav_summon_X, fav_summon_Y+40, clickVariance)
-			globalTimeout := 0
+			RandomClick(fav_summon_X, fav_summon_Y, clickVariance)
 		}
 		else if InStr(searchResult, fav_icon_selected)
 		{
-			updateLog("Clicking on first summon")
-			RandomClick(first_summon_X, first_summon_Y+40, clickVariance) 
-			globalTimeout := 0
-		}
-		else if InStr(searchResult, raids)
-		{
-			updateLog("Raids dialog found, returning to pending")
-			GoToPage(pendingURL)
-			globalTimeout := 0
+			updateLog("Clicking first summon")
+			RandomClick(first_summon_X, first_summon_Y+40, clickVariance)
+			Sleep, % default_interval
+			
 		}
 		continue
 	}
-	else if InStr(sURL, searchPending)
+	else if InStr(sURL, searchEvent)
 	{
-		updateLog("-----In Pending Screen-----")					
-
-		;Send  {Space}
-		Sleep, % default_interval		
+		updateLog("-----In Event Page-----")
+		updateLog("Going to quest summon select")
+		GoToPage(repeatQuestURL)
 		
-		pendingActions := [3raids, vmate_join, vmate_refill, vmate_ok, ok_button]
-		searchResult := multiImageSearch(coordX, coordY, pendingActions)
-		
-		if InStr(searchResult, 3raids)
-		{
-			updateLog("Raids dialog found, clicking first pending and sleeping")
-			Send {Space}
-			Sleep, % default_interval
-			
-			updateLog("Clicking first pending")
-			RandomClick(pending_first_X, pending_first_Y, clickVariance)	
-			Sleep, % medium_interval
-			
-			;Sleep, 20000
-			GoToPage(pendingURL)
-		}
-		else if InStr(searchResult, vmate_join)
-		{
-			updateLog("VMate join raid button found, clicking")
-			RandomClick(vmate_joinraid_X, vmate_joinraid_Y, clickVarianceSmall)
-			Sleep, % default_interval
-		}
-		else if InStr(searchResult, vmate_refill)
-		{
-			updateLog("VMate refill button found, clicking")
-			RandomClick(vmate_refill_X, vmate_refill_Y, clickVarianceSmall)
-			Sleep, % medium_interval
-		}
-		else if InStr(searchResult, vmate_ok)
-		{
-			updateLog("VMate OK button found, raid was not joined")
-			RandomClick(vmate_ok_X, vmate_ok_Y, clickVariance)
-			Sleep, % default_interval
-			
-			updateLog("Clicking first pending")
-			RandomClick(pending_first_X, pending_first_Y, clickVariance)	
-			Sleep, % medium_interval
-		}
-		else if InStr(searchResult, ok_button)
-		{
-			updateLog("Dialog found, pressing space")
-			Send {Space}
-			Sleep, % default_interval
-			
-			updateLog("Clicking first pending")
-			RandomClick(pending_first_X, pending_first_Y, clickVariance)	
-			Sleep, % medium_interval
-		}
-		else
-		{
-			updateLog("Clicking VMate icon")
-			RandomClick(vmate_icon_X, vmate_icon_Y, clickVarianceSmall)
-		}
-		
-		continue
-	}	
+	}
 	else if InStr(sURL, searchQuest)
 	{
-		updateLog("-----In Quest Page-----")
-		updateLog("Going to Pending page")
-		GoToPage(pendingURL)
-		continue	
-	}
-	else if InStr(sURL, mypage)
+		updateLog("-----In Quests Screen-----")
+		
+		Sleep, % default_interval * 2
+		
+		updateLog("Confirming Special button")
+		if(!ImageSearchWrapper(coordX, coordY, special))
+		{
+			MsgBox, 4,, Special button not found - continue?
+			IfMsgBox Yes
+				continue
+			else
+				ExitApp
+		}
+		
+		updateLog("Going to event page")
+		GoToPage(eventURL)
+	}	
+	else if InStr(sURL, searchMypage)
 	{
 		updateLog("-----In Home Page-----")
-		updateLog("Going to Pending page")
-		GoToPage(pendingURL)
+		updateLog("Going to Quest page")
+		GoToPage(questURL)
 		continue
+	}
+	else if InStr(sURL, guildWarsURL)
+	{
+		updateLog("-----In GW Page-----")
+		updateLog("Going to Quest page")
+		GoToPage(questURL)
 	}
 	else
 	{
@@ -298,7 +245,7 @@ Return
 ;----------------------------------------------
 
 F1::
-updateLog("Resizing window to " . GBF_winWidth . " x " . GBF_winHeight)
+updateLog("Resizing favow to " . GBF_winWidth . " x " . GBF_winHeight)
 ResizeWin(GBF_winWidth, GBF_winHeight)
 Return
 

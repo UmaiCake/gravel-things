@@ -27,7 +27,7 @@ BattleSequence1(attackTurns)
 ;Main Loop
 ;----------------------------------------------
 global maxBattles := maxBattles * waitResultMax
-killTime := 600000 * minutesTilKill
+killTime := 60000 * minutesTilKill
 SetTimer, ForceExitApp, %killTime%
 
 Loop{
