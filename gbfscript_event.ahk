@@ -11,6 +11,7 @@ Gui, Add, ListView, x6 y6 w400 h500 vLogbox LVS_REPORT, %A_Now%|Activity
 
 global minutesTilKill := 120
 repeatQuestURL := "http://game.granbluefantasy.jp/#quest/supporter/501141/5"
+repeatQuestURL_NM := "http://game.granbluefantasy.jp/#quest/supporter/501161/5"
 
 ;----------------------------------------------
 ;Battle Sequence
@@ -30,7 +31,7 @@ BattleSequence1(attackTurns)
 	{
 		updateLog("Special group 1 action")		
 
-		Send 1q2r3e1we4qew2qw3q
+		Send 1qr2r3e1we4qew2qw3q
 
 		Sleep, % default_button_delay
 		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)	
@@ -200,15 +201,15 @@ If (sURL != "")
 		updateLog("Confirming Special button")
 		if(!ImageSearchWrapper(coordX, coordY, special))
 		{
-			MsgBox, 4,, Special button not found - continue?
-			IfMsgBox Yes
-				continue
-			else
-				ExitApp
+			updateLog("Special button not found, going to NM")
+			attackTurns := 6
+			GoToPage(repeatQuestURL_NM)
+			continue
 		}
 		
-		updateLog("Going to event page")
-		GoToPage(eventURL)
+		updateLog("Going to quest summon select")
+		GoToPage(repeatQuestURL)
+		continue
 	}	
 	else if InStr(sURL, searchMypage)
 	{
@@ -222,6 +223,7 @@ If (sURL != "")
 		updateLog("-----In GW Page-----")
 		updateLog("Going to Quest page")
 		GoToPage(questURL)
+		continue
 	}
 	else
 	{
