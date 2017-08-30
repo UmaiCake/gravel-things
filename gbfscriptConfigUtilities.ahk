@@ -206,6 +206,7 @@ global last_hosted := "last_hosted.png"
 global tap_start := "tap_start.png"
 
 global special := "special.png"
+global special_nm := "special_nm.png"
 global favorites_button := "favorites_button.png"
 
 global featured_button := "featured_button.png"

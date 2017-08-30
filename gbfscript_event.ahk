@@ -196,20 +196,23 @@ If (sURL != "")
 	{
 		updateLog("-----In Quests Screen-----")
 		
-		Sleep, % default_interval * 2
+		questAutoSelect := [special, special_nm]
+		searchResult := multiImageSearch(coordX, coordY, questAutoSelect)
 		
-		updateLog("Confirming Special button")
-		if(!ImageSearchWrapper(coordX, coordY, special))
+		if InStr(searchResult, special)
 		{
-			updateLog("Special button not found, going to NM")
+			updateLog("Normal Special button found")
+			GoToPage(repeatQuestURL)
+			continue
+			
+		}
+		else if InStr(searchResult, special_nm)
+		{
+			updateLog("NM triggered Special button found")
 			attackTurns := 6
 			GoToPage(repeatQuestURL_NM)
 			continue
 		}
-		
-		updateLog("Going to quest summon select")
-		GoToPage(repeatQuestURL)
-		continue
 	}	
 	else if InStr(sURL, searchMypage)
 	{

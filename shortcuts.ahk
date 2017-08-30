@@ -13,8 +13,8 @@ Return
 ;SR hards
 +F2::
 SetKeyDelay, 100
-;Send 2ew3w2e3q1wer3e4wq
-Send 4w1wer2q3w
+Send 2ew3w2e3q1wer3e4wq
+;Send 4w1wer2q3w
 Return
 
 ;SR leech
