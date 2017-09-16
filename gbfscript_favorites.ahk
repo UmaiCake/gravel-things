@@ -10,16 +10,51 @@ Gui, Add, ListView, x6 y6 w400 h500 vLogbox LVS_REPORT, %A_Now%|Activity
 ;----------------------------------------------
 
 minutesTilKill := 180
+first_summon_Y := 520
 
 ;----------------------------------------------
 ;Battle Sequence
 ;----------------------------------------------
 BattleSequence1(attackTurns)
-{
-	Send 1r
+{	
+	SpecialTurns1 := [4]
+	SpecialTurns2 := [5]
+	
+	if(attackTurns <=1)
+	{
+		updateLog("1st turn action")
 
-	Sleep, % default_button_delay
-	RandomClickWide(attack_button_X, attack_button_Y, clickVariance)		
+		Send 1wer4q		
+		Sleep, 2000
+		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)		
+	}
+	
+	else if(ArrayContains(SpecialTurns1, attackTurns))
+	{
+		updateLog("3rd turn")
+		
+		Send 3w
+		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)	
+		
+	}
+	
+	else if(ArrayContains(SpecialTurns2, attackTurns))
+	{
+		updateLog("4th turn")
+		
+		Send 3q
+		Sleep, % default_button_delay
+		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)	
+	}
+	
+	else
+	{
+		updateLog("Non-special turn action")
+
+		Send 1werq4q
+		Sleep, % default_button_delay
+		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)	
+	}
 }
 
 

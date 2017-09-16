@@ -10,8 +10,9 @@ Gui, Add, ListView, x6 y6 w400 h500 vLogbox LVS_REPORT, %A_Now%|Activity
 ;----------------------------------------------
 
 global minutesTilKill := 120
-;repeatQuestURL := "http://game.granbluefantasy.jp/#event/teamraid032/supporter/720361/1"
-repeatQuestURL := "http://game.granbluefantasy.jp/#event/teamraid032/supporter/720371/1"
+global waitResultMax := 5
+repeatQuestURL := "http://game.granbluefantasy.jp/#quest/supporter/721101/1/0/10234"
+eventURL := "http://game.granbluefantasy.jp/#event/treasureraid059"
 
 ;----------------------------------------------
 ;Battle Sequence
@@ -24,7 +25,7 @@ BattleSequence1(attackTurns)
 	{
 		updateLog("1st turn action")
 
-		Send 1rwe2e4weq
+		Send 1rq2eq3r1we3qw4qe
 		
 		Sleep, % long_delay
 		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)		
@@ -34,7 +35,7 @@ BattleSequence1(attackTurns)
 	{
 		updateLog("Special group 1 action")		
 
-		Send 1q3eqw
+		Send 2w
 
 		Sleep, % default_button_delay
 		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)	
@@ -198,6 +199,11 @@ BattleSequence4(attackTurns)
 	}
 
 }
+BattleSequence5(attackTurns)
+{
+	Send 1rq3r1we3qw4qe
+	RandomClickWide(attack_button_X, attack_button_Y, clickVariance)
+}
 
 ;----------------------------------------------
 ;Main Loop
@@ -234,7 +240,7 @@ If (sURL != "")
 		{
 			updateLog("-----Start Battle Sequence-----")			
 			
-			battleSequence3(attackTurns)
+			battleSequence1(attackTurns)
 			
 			attackTurns += 1 
 			globalTimeout := 0
@@ -346,8 +352,8 @@ If (sURL != "")
 	else if InStr(sURL, searchMypage)
 	{
 		updateLog("-----In Home Page-----")
-		updateLog("Going to GW page")
-		GoToPage(guildWarsURL)	
+		updateLog("Going to event page")
+		GoToPage(eventURL)	
 		continue
 	}
 	else if InStr(sURL, guildWarsURL)
@@ -355,6 +361,15 @@ If (sURL != "")
 		updateLog("-----In GW Page-----")
 		updateLog("Going to quest summon select")
 		GoToPage(repeatQuestURL)		
+	}
+	else if InStr(sURL, eventURL)
+	{
+		updateLog("-----In Event Page-----")
+		
+		;SelectQuest()		
+		
+		updateLog("Going to quest summon select")
+		GoToPage(repeatQuestURL)
 	}
 	else
 	{
@@ -370,7 +385,22 @@ Else
 
 Return
 
-
+SelectQuest()
+{
+		Sleep, 2000
+		Send  {WheelDown}
+		Send  {WheelDown}
+		
+		Sleep, 1000
+		
+		RandomClick(364,1000, clickVarianceSmall)
+		
+		Sleep, 1000
+		
+		RandomClick(498, 877, clickVarianceSmall)
+		
+		Sleep, 5000
+}
 
 
 ;----------------------------------------------

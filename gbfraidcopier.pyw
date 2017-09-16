@@ -15,7 +15,7 @@ config = configparser.ConfigParser()
 config.read('gbfraidcopier.cfg')
 
 
-raidCount = 7
+raidCount = 6
 trk = [0]*raidCount
 cpyOn = [0]*raidCount
 sndOn = [0]*raidCount
@@ -25,8 +25,7 @@ names = [
     "Ultimate Bahamut",
     "Proto Bahamut",
     "The Grand Order",
-    "Baal",
-    "Xeno Sagi"
+    "Macula Marius",
     ]
 enSearchStrings = [
     u"Lvl 100 Huanglong",
@@ -34,8 +33,7 @@ enSearchStrings = [
     u"Lvl 150 Ultimate Bahamu",
     u"Lvl 100 Proto Bahamut",
     u"Lvl 100 The Grand Order",
-    u"Lvl 100 Baal",
-    u"Lvl 100 Xeno Saggitarius"
+    u"Lvl 100 Macula Marius",
     ]
 jpSearchStrings = [
     u"Lv100 黄龍",
@@ -43,8 +41,7 @@ jpSearchStrings = [
     u"Lv150 アルティメットバハムート",
     u"Lv100 プロトバハムート",
     u"Lv100 ジ・オーダー・グランデ",
-    u"Lv100 バアル",
-    u"Lv100 ゼノ・サジタリウス"
+    u"Lv100 マキュラ・マリウス"
     ]
 logtext = {}
 idregex = re.compile(u'ID(?:：|\: )([A-Z0-9]{8})')

@@ -10,20 +10,23 @@ Gui, Add, ListView, x6 y6 w400 h500 vLogbox LVS_REPORT, %A_Now%|Activity
 ;----------------------------------------------
 
 global minutesTilKill := 120
-repeatQuestURL := "http://game.granbluefantasy.jp/#quest/supporter/501141/5"
-repeatQuestURL_NM := "http://game.granbluefantasy.jp/#quest/supporter/501161/5"
+repeatQuestURL := "http://game.granbluefantasy.jp/#quest/supporter/721341/5"
+repeatQuestURL_NM := "http://game.granbluefantasy.jp/#quest/supporter/721361/5"
 
 ;----------------------------------------------
 ;Battle Sequence
 ;----------------------------------------------
 BattleSequence1(attackTurns)
 {
-	SpecialTurns1 := [6]
+	SpecialTurns1 := [3]
+	SpecialTurns2 := [100]
 	
 	if(attackTurns <=1)
 	{
 		updateLog("1st turn action")
-
+		
+		Send 1r3qe4we
+		
 		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)		
 	}
 	
@@ -31,7 +34,17 @@ BattleSequence1(attackTurns)
 	{
 		updateLog("Special group 1 action")		
 
-		Send 1qr2r3e1we4qew2qw3q
+		Send 1qwe
+
+		Sleep, % default_button_delay
+		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)	
+	}	
+	
+	else if(ArrayContains(SpecialTurns2, attackTurns))
+	{
+		updateLog("Special group 2 action")		
+
+		Send 1rq3qe1we2q3w4qe
 
 		Sleep, % default_button_delay
 		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)	
@@ -209,7 +222,7 @@ If (sURL != "")
 		else if InStr(searchResult, special_nm)
 		{
 			updateLog("NM triggered Special button found")
-			attackTurns := 6
+			attackTurns := 100
 			GoToPage(repeatQuestURL_NM)
 			continue
 		}

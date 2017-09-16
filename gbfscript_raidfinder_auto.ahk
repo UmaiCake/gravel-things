@@ -13,7 +13,7 @@ minutesTilKill := 120
 first_summon_Y := 520
 default_interval := 500
 maxGlobalTimeout := 30
-maxAttackTurns := 3
+maxAttackTurns := 2
 
 ;----------------------------------------------
 ;Battle Sequence
@@ -24,9 +24,9 @@ BattleSequence1(attackTurns)
 	{
 		updateLog("1st turn action")
 
-		Send 4wq1r2q3qw
+		Send 4w3w1r
 		
-		Sleep, % long_delay
+		Sleep, 9000
 		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)		
 	}
 	

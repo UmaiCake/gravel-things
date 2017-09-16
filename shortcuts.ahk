@@ -13,8 +13,8 @@ Return
 ;SR hards
 +F2::
 SetKeyDelay, 100
-Send 2ew3w2e3q1wer3e4wq
-;Send 4w1wer2q3w
+;Send 2ew3w2e3q1wer3e4wq
+Send 4w1wer2q3w
 Return
 
 ;SR leech
@@ -26,7 +26,13 @@ Return
 ;Fire
 +F3::
 SetKeyDelay, 100
-Send 1rq2r3e1we2qw4qew3q
+Send 1rq3r1we3qw4q2eqw
+Return
+
+;Fire Alt
+^F3::
+SetKeyDelay, 100
+Send 1rq3r1we3qw4qe
 Return
 
 ;Wind
