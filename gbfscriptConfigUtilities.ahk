@@ -42,6 +42,9 @@ global last_hosted_Y := 760
 global attack_button_X := 525
 global attack_button_Y := 575
 
+global battle_summon_X := 525
+global battle_summon_Y := 870
+
 global join_confirm_X := 500
 global join_confirm_Y := 820
 
@@ -500,6 +503,13 @@ ClickSkill(character, skillNum)
 	updateLog("Clicking skill: " . character . "," . skillNum . " at " . skillCoordX . "," . skillY)
 	
 	RandomClick(skillCoordX, skillY, clickVarianceSmall)
+	Sleep, % default_button_delay
+}
+
+ClickSummon(summonNum)
+{
+	offset := (summonNum - 1) * 25	
+	RandomClick(battle_summon_X  + offset, battle_summon_Y, clickVarianceSmall)
 	Sleep, % default_button_delay
 }
 

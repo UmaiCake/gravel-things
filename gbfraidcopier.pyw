@@ -20,7 +20,7 @@ trk = [0]*raidCount
 cpyOn = [0]*raidCount
 sndOn = [0]*raidCount
 names = [
-    "Huanglong",
+    "Piasa",
     "Qilin",
     "Ultimate Bahamut",
     "Proto Bahamut",
@@ -28,7 +28,7 @@ names = [
     "Macula Marius",
     ]
 enSearchStrings = [
-    u"Lvl 100 Huanglong",
+    u"Lvl 100 Piasa",
     u"Lvl 100 Qilin",
     u"Lvl 150 Ultimate Bahamu",
     u"Lvl 100 Proto Bahamut",
@@ -36,7 +36,7 @@ enSearchStrings = [
     u"Lvl 100 Macula Marius",
     ]
 jpSearchStrings = [
-    u"Lv100 黄龍",
+    u"Lv100 パイア・ソー",
     u"Lv100 黒麒麟",
     u"Lv150 アルティメットバハムート",
     u"Lv100 プロトバハムート",

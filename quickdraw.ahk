@@ -1,13 +1,13 @@
 #Include gbfscriptConfigUtilities.ahk
 
 global flag := true
-global pageURL := "http://game.granbluefantasy.jp/#event/teamraid032/gacha/index"
+global pageURL := "http://game.granbluefantasy.jp/#event/teamraid033/gacha/index"
 running := false
 count := 0
 maxCount := 9999
 
 XButton2::
-;GoToPage(pageURL)
+GoToPage(pageURL)
 running := false
 Return
 

@@ -10,9 +10,10 @@ Gui, Add, ListView, x6 y6 w400 h500 vLogbox LVS_REPORT, %A_Now%|Activity
 ;----------------------------------------------
 
 global minutesTilKill := 120
-global waitResultMax := 5
-repeatQuestURL := "http://game.granbluefantasy.jp/#quest/supporter/721101/1/0/10234"
-eventURL := "http://game.granbluefantasy.jp/#event/treasureraid059"
+global waitResultMax := 3
+repeatQuestURL := "http://game.granbluefantasy.jp/#event/teamraid033/supporter/722161/1"
+;repeatQuestURL := "http://game.granbluefantasy.jp/#event/teamraid033/supporter/722171/1"
+eventURL := "http://game.granbluefantasy.jp/#event/teamraid033"
 
 ;----------------------------------------------
 ;Battle Sequence
@@ -25,21 +26,13 @@ BattleSequence1(attackTurns)
 	{
 		updateLog("1st turn action")
 
-		Send 1rq2eq3r1we3qw4qe
+		Send 4w	
+		ClickSummon(1)
+		Send 1r3q
 		
 		Sleep, % long_delay
 		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)		
 	}
-	
-	else if(ArrayContains(SpecialTurns1, attackTurns))
-	{
-		updateLog("Special group 1 action")		
-
-		Send 2w
-
-		Sleep, % default_button_delay
-		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)	
-	}	
 	
 	else
 	{
@@ -56,8 +49,10 @@ BattleSequence2(attackTurns)
 	if(attackTurns <=1)
 	{
 		updateLog("1st turn action")
-		
-		Send 1rqwe2qw4wq3eq
+
+		Send 4w1w2qw1e		
+		ClickSummon(1)
+		Send 1r
 		
 		Sleep, % long_delay
 		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)	
@@ -85,7 +80,9 @@ BattleSequence3(attackTurns)
 	{
 		updateLog("1st turn action")
 		
-		Send 1q2q1e2q4e2q1w4w3q1r
+		Send 1re2ew3e1w4qw1q
+		ClickSummon(6)
+		Send 2q
 		
 		Sleep, % long_delay
 		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)		
@@ -94,6 +91,8 @@ BattleSequence3(attackTurns)
 	else if(ArrayContains(SpecialTurns1, attackTurns))
 	{
 		updateLog("2nd turn action")		
+		
+		Send 3wq
 
 		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)			
 	}
@@ -102,17 +101,15 @@ BattleSequence3(attackTurns)
 	{
 		updateLog("3rd turn action")		
 
-		Send 3w
-
+		Send 4e
+		
 		Sleep, % default_button_delay
 		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)			
 	}
 	
 	else if(ArrayContains(SpecialTurns3, attackTurns))
 	{
-		updateLog("4th turn action")	
-		
-		Send 2e4q
+		updateLog("4th turn action")			
 
 		Sleep, % default_button_delay
 		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)			
@@ -122,8 +119,17 @@ BattleSequence3(attackTurns)
 	{
 		updateLog("5th turn action")		
 		
-		Send 3e
-
+		Sleep, % default_button_delay
+		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)			
+	}
+	
+	else if(ArrayContains(SpecialTurns5, attackTurns))
+	{
+		updateLog("6th turn action")		
+		
+		Send 3e2w1q
+		ClickSummon(1)
+		
 		Sleep, % default_button_delay
 		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)			
 	}
@@ -132,7 +138,7 @@ BattleSequence3(attackTurns)
 	{
 		updateLog("Non-special turn action")
 
-		Send 1qwer3q3w
+		ClickSummon(5)
 		
 		Sleep, % default_button_delay
 		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)	
@@ -146,13 +152,16 @@ BattleSequence4(attackTurns)
 	SpecialTurns2 := [3]
 	SpecialTurns3 := [4]
 	SpecialTurns4 := [5]
+	SpecialTurns5 := [6]
 	
 
 	if(attackTurns <=1)
 	{
 		updateLog("1st turn action")
 		
-		Send 1q2q1w2q4w2q3q1r
+		Send e2ew3we1w4qw1q
+		ClickSummon(6)
+		Send 2q
 		
 		Sleep, % long_delay
 		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)		
@@ -161,29 +170,36 @@ BattleSequence4(attackTurns)
 	else if(ArrayContains(SpecialTurns1, attackTurns))
 	{
 		updateLog("2nd turn action")		
+		
+		Send 1er3q
 
-		Send 3w4e1e
-
-		Sleep, % default_button_delay
 		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)			
 	}
 	
 	else if(ArrayContains(SpecialTurns2, attackTurns))
 	{
-		updateLog("3rd turn action")	
-		
-		Send 2e
+		updateLog("3rd turn action")		
 
+		Send 4e
+		
 		Sleep, % default_button_delay
 		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)			
 	}
 	
 	else if(ArrayContains(SpecialTurns3, attackTurns))
 	{
-		updateLog("4th turn action")		
+		updateLog("4th turn action")			
 		
-		Send 3e4q
+		ClickSummon(1)
 
+		Sleep, % default_button_delay
+		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)			
+	}
+	
+	else if(ArrayContains(SpecialTurns4, attackTurns))
+	{
+		updateLog("5th turn action")					
+		
 		Sleep, % default_button_delay
 		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)			
 	}
@@ -192,7 +208,7 @@ BattleSequence4(attackTurns)
 	{
 		updateLog("Non-special turn action")
 
-		Send 1qwer3q3w
+		ClickSummon(5)
 		
 		Sleep, % default_button_delay
 		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)	
@@ -201,8 +217,27 @@ BattleSequence4(attackTurns)
 }
 BattleSequence5(attackTurns)
 {
-	Send 1rq3r1we3qw4qe
-	RandomClickWide(attack_button_X, attack_button_Y, clickVariance)
+	SpecialTurns1 := [2]
+	
+	if(attackTurns <=1)
+	{
+		updateLog("1st turn action")
+
+		Send 1re2ew3q4qe1w2q3w1q
+		ClickSummon(6)
+		
+		Sleep, % long_delay
+		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)		
+	}
+	
+	else
+	{
+		updateLog("Non-special turn action")
+
+		Sleep, % default_button_delay
+		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)	
+	}
+
 }
 
 ;----------------------------------------------
@@ -240,7 +275,7 @@ If (sURL != "")
 		{
 			updateLog("-----Start Battle Sequence-----")			
 			
-			battleSequence1(attackTurns)
+			battleSequence5(attackTurns)
 			
 			attackTurns += 1 
 			globalTimeout := 0
