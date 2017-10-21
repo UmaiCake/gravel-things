@@ -11,9 +11,10 @@ Gui, Add, ListView, x6 y6 w400 h500 vLogbox LVS_REPORT, %A_Now%|Activity
 
 global minutesTilKill := 120
 global waitResultMax := 3
-repeatQuestURL := "http://game.granbluefantasy.jp/#event/teamraid033/supporter/722161/1"
-;repeatQuestURL := "http://game.granbluefantasy.jp/#event/teamraid033/supporter/722171/1"
-eventURL := "http://game.granbluefantasy.jp/#event/teamraid033"
+
+eventURL := "http://game.granbluefantasy.jp/#event/treasureraid060"
+
+repeatQuestURL := "http://game.granbluefantasy.jp/#quest/supporter/400121/4"
 
 ;----------------------------------------------
 ;Battle Sequence
@@ -26,9 +27,7 @@ BattleSequence1(attackTurns)
 	{
 		updateLog("1st turn action")
 
-		Send 4w	
-		ClickSummon(1)
-		Send 1r3q
+		Send 1r4q
 		
 		Sleep, % long_delay
 		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)		
@@ -37,6 +36,8 @@ BattleSequence1(attackTurns)
 	else
 	{
 		updateLog("Non-special turn action")
+		
+		Send 1r
 
 		Sleep, % default_button_delay
 		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)	
@@ -275,7 +276,7 @@ If (sURL != "")
 		{
 			updateLog("-----Start Battle Sequence-----")			
 			
-			battleSequence5(attackTurns)
+			battleSequence1(attackTurns)
 			
 			attackTurns += 1 
 			globalTimeout := 0

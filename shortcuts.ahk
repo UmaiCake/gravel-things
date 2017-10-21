@@ -13,8 +13,8 @@ Return
 ;SR hards
 +F2::
 SetKeyDelay, 100
-;Send 2ew3w2e3q1wer3e4wq
-Send 4w1wer2q3w
+;Send 2w3w4wq3qe1wer
+Send 1wer2qe4e
 Return
 
 ;SR leech
@@ -44,7 +44,7 @@ Return
 ;Water
 +F5::
 SetKeyDelay, 100
-Send 1rq2re3qwe1we4q
+Send 1rqwe2re3qwe1we4q
 Return
 
 ;Earth

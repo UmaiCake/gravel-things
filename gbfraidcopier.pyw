@@ -20,31 +20,35 @@ trk = [0]*raidCount
 cpyOn = [0]*raidCount
 sndOn = [0]*raidCount
 names = [
-    "Piasa",
-    "Qilin",
+    "Celeste Omega HL",
+    "Colossus Omega HL",
+    "Leviathan Omega HL",
+    "Tiamat Omega HL",
+    "Yggdrasil Omega HL",
     "Ultimate Bahamut",
     "Proto Bahamut",
     "The Grand Order",
-    "Macula Marius",
     ]
 enSearchStrings = [
-    u"Lvl 100 Piasa",
-    u"Lvl 100 Qilin",
-    u"Lvl 150 Ultimate Bahamu",
+    u"Lvl 100 Celeste Omega",
+    u"Lvl 100 Colossus Omega",
+    u"Lvl 100 Tiamat Omega Ayr",
+    u"Lvl 100 Yggdrasil Omega",
+    u"Lvl 150 Ultimate Bahamut",
     u"Lvl 100 Proto Bahamut",
     u"Lvl 100 The Grand Order",
-    u"Lvl 100 Macula Marius",
     ]
 jpSearchStrings = [
-    u"Lv100 パイア・ソー",
-    u"Lv100 黒麒麟",
+    u"Lv100 セレスト・マグナ",
+    u"Lv100 コロッサス・マグナ",
+    u"Lv100 ティアマト・マグナ＝エア",
+    u"Lv100 ユグドラシル・マグナ",
     u"Lv150 アルティメットバハムート",
     u"Lv100 プロトバハムート",
     u"Lv100 ジ・オーダー・グランデ",
-    u"Lv100 マキュラ・マリウス"
     ]
 logtext = {}
-idregex = re.compile(u'ID(?:：|\: )([A-Z0-9]{8})')
+idregex = re.compile(u'([A-Z0-9]{8})')
 
 class TwitterStreamListener(tweepy.StreamListener):
     def on_data(self, data):
@@ -52,6 +56,8 @@ class TwitterStreamListener(tweepy.StreamListener):
         texts = json_load['text']
         coded = texts.encode('utf-8')
         st = str(coded, encoding='utf-8')
+
+        #log(st)
 		
         for i in range(0, raidCount):
             if (trk[i] or sndOn[i] or cpyOn[i]) and (st.find(enSearchStrings[i]) != -1 or st.find(jpSearchStrings[i]) != -1):

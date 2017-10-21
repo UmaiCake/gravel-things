@@ -21,7 +21,7 @@ if running
 running := true
 Loop
 {	
-	RandomClickWide(369, 421, clickVariance)
+	RandomClick(369, 420, clickVarianceSmall)
 	Sleep, 2000
 	Send {Space} 
 	Sleep, 1000

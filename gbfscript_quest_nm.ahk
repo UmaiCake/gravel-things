@@ -10,8 +10,11 @@ Gui, Add, ListView, x6 y6 w400 h500 vLogbox LVS_REPORT, %A_Now%|Activity
 ;----------------------------------------------
 
 global minutesTilKill := 120
-repeatQuestURL := "http://game.granbluefantasy.jp/#quest/supporter/721341/5"
-repeatQuestURL_NM := "http://game.granbluefantasy.jp/#quest/supporter/721361/5"
+
+eventURL := "http://game.granbluefantasy.jp/#quest"
+
+repeatQuestURL := "http://game.granbluefantasy.jp/#quest/supporter/722541/5"
+repeatQuestURL_NM := "http://game.granbluefantasy.jp/#quest/supporter/722571/5"
 
 ;----------------------------------------------
 ;Battle Sequence
@@ -20,12 +23,15 @@ BattleSequence1(attackTurns)
 {
 	SpecialTurns1 := [3]
 	SpecialTurns2 := [100]
+	SpecialTurns3 := [101]
+	SpecialTurns4 := [102]
+	SpecialTurns5 := [103]
 	
 	if(attackTurns <=1)
 	{
-		updateLog("1st turn action")
+		updateLog("1st turn action")	
 		
-		Send 1r3qe4we
+		Send 1r4w2q3w4e
 		
 		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)		
 	}
@@ -33,9 +39,9 @@ BattleSequence1(attackTurns)
 	else if(ArrayContains(SpecialTurns1, attackTurns))
 	{
 		updateLog("Special group 1 action")		
-
-		Send 1qwe
-
+		
+		Send 1w3q2e4q1q
+		
 		Sleep, % default_button_delay
 		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)	
 	}	
@@ -44,7 +50,8 @@ BattleSequence1(attackTurns)
 	{
 		updateLog("Special group 2 action")		
 
-		Send 1rq3qe1we2q3w4qe
+		ClickSummon(6)
+		Send 1re2q3w4w1w3q4qe2e1q
 
 		Sleep, % default_button_delay
 		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)	
@@ -53,6 +60,8 @@ BattleSequence1(attackTurns)
 	else
 	{
 		updateLog("Non-special turn action")
+		
+		Send 1e
 
 		Sleep, % default_button_delay
 		RandomClickWide(attack_button_X, attack_button_Y, clickVariance)	
@@ -231,7 +240,14 @@ If (sURL != "")
 	{
 		updateLog("-----In Home Page-----")
 		updateLog("Going to Quest page")
-		GoToPage(questURL)
+		GoToPage(eventURL)
+		continue
+	}
+	else if InStr(sURL, eventPageURL)
+	{
+		updateLog("-----In Event Page-----")
+		updateLog("Going to Quest page")
+		GoToPage(repeatQuestURL)
 		continue
 	}
 	else if InStr(sURL, guildWarsURL)
